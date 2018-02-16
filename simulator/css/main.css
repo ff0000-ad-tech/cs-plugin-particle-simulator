@@ -1,0 +1,163 @@
+body {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+}
+
+#block-guide, #velocity-guide, #force-guide {
+	pointer-events: none;
+}
+
+#block-guide {
+	position: absolute;;
+	top: 0;
+	left: 0;
+	width: 0;
+	height: 0;
+	background-color: rgba( 255, 150, 150, 0.6);
+	border: 2px rgba(255, 255, 255, 0.8) solid;
+	box-shadow: 0px 0px 4px black;
+	opacity: 0;
+	transition: .5s opacity, border-radius 0s .6s;
+}
+
+#block-guide.oval {
+	border-radius: 50% 50%;
+}
+
+#velocity-guide, #force-guide {
+	position: absolute;
+	opacity: 0;
+	transition: .3s opacity;
+}
+
+#block-guide.show, #velocity-guide.show, #force-guide.show {
+	opacity: 1;
+	transition: .1s opacity;
+}
+
+#code-display {
+	position: fixed;;
+	top: 0;
+	left: 0;
+	right: 0;
+	min-height: 100%;
+	color: white;
+	font-family: Arial;
+	line-height: 17px;
+	background-color: rgba(0, 0, 0, .8);
+	display: none;
+	z-index: 10;
+}
+
+#code-display strong {
+	width: 100%;
+	text-align: center;
+	font-size: 20px;
+	margin: 60px 0 30px;
+	display: block;
+}
+
+#code-display-text {
+	position: relative;
+	width: 600px;
+	height: 400px;
+	color: black;
+	font-size: 14px;
+	overflow: auto;
+	margin: 0 auto;
+	padding: 30px;
+	background-color: rgb(0, 195, 255);
+	box-sizing: border-box;
+	display: block;
+}
+
+#code-display-text::selection {
+  background: #A3FF00;
+}
+
+#code-close {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	cursor: pointer;
+}
+
+#code-close-sign {
+	position: absolute;
+    top: 15px;
+    right: 15px;
+	color: rgba(255, 255, 255, .7);
+	font-size: 30px;
+}
+
+#move-btn, #help-btn {
+	position: absolute;
+	left: -20px;
+	width: 27px;
+	height: 27px;
+	background-size: contain;
+	opacity: 0.7;
+	background-color: white;
+	transition: .2s opacity ease-in;
+}
+
+#move-btn:hover, #help-btn:hover {
+	opacity: 1;
+}
+
+#move-btn {
+	top: 3px;
+	background-image: url( '../images/move.png' );
+	cursor: move;
+}
+
+#help-btn {
+	top: 42px;
+	background-image: url( '../images/help.png' );
+	cursor: pointer;
+}
+
+canvas {
+	position: absolute;;
+	top: 0;
+	left: 0;
+}
+
+#canvas-el {
+	border: 2px silver solid;
+}
+
+/* Overrid dat gui style */
+body .dg.ac {
+	position: absolute;
+	width: 800px;
+	left: auto;
+	height: auto;
+	z-index: 5;
+}
+
+.dg li.title, .dg .property-name, .dg .close-button {
+	-webkit-user-select: none;
+}
+
+.dg.ac div:nth-child(4) {
+	margin-top: 100px;
+}
+
+body .dg .cr.string.text-box {
+	height: 165px;
+}
+
+.dg .closed .cr.string.text-box {
+	height: 0;
+}
+
+body .dg .cr.string.text-box textarea {
+	height: 120px;
+	width: 127px;
+	font-size: 13px;
+}
