@@ -1,13 +1,20 @@
 const path = require('path')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+
+
+const PATHS = {
+  dist: path.resolve(__dirname, 'dist'),
+  source: path.resolve(__dirname, 'source')
+}
+
+
 module.exports = {
-  entry: './source/js/main.js',
+  entry: path.resolve(PATHS.source, 'js/main.js'),
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: PATHS.dist,
     filename: 'bundle.js',
   },
-  modules: {
-    resolve: ['../node_modules'],
+  module: {
     rules: [
       {
         test: /\*.js/,
@@ -15,13 +22,32 @@ module.exports = {
       }
     ]
   },
+  resolve: {
+    modules: [
+      path.resolve(__dirname, '../node_modules')
+    ]
+  },  
   plugins: [
     new CopyWebpackPlugin([
       {
-        from: path.resolve(__dirname, 'source/css/*')
+        from: path.resolve(PATHS.source, 'index.html'),
+        to: PATHS.dist,
+        flatten: true
+      },
+      {
+        from: path.resolve(PATHS.source, 'simulator_settings.json'),
+        to: PATHS.dist,
+        flatten: true
+      },
+      {
+        from: path.resolve(PATHS.source, 'css/*'),
+        to: PATHS.dist,
+        flatten: true
       }, 
       {
-        from: path.resolve(__dirname, 'source/images/*')
+        from: path.resolve(PATHS.source, 'images/*'),
+        to: path.resolve(PATHS.dist, 'images'),
+        flatten: true
       }
     ])
   ],
