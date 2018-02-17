@@ -1,5 +1,4 @@
-var InterfaceData = InterfaceData || {};
-InterfaceData.styleAnimation = [
+export default [
 	
 	// {
 	// 	name: 'blendMode',

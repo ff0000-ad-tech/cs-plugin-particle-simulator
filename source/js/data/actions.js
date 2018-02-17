@@ -1,10 +1,10 @@
-var InterfaceData = InterfaceData || {};
-InterfaceData.actions = [
+
+export default [
 	{
 		name: 'emit',
 		type: 'action', //integer
 		defaultVal: function () {
-			Interface.PS.emit();
+			window.Interface.PS.emit();
 		}
 	},
 
@@ -12,7 +12,7 @@ InterfaceData.actions = [
 		name: 'stopEmitting',
 		type: 'action',
 		defaultVal: function () {
-			Interface.PS.stopEmitting();
+			window.Interface.PS.stopEmitting();
 		}
 	},
 
@@ -20,7 +20,7 @@ InterfaceData.actions = [
 		name: 'pause',
 		type: 'action',
 		defaultVal: function () {
-			Interface.PS.pause();
+			window.Interface.PS.pause();
 		}
 	},
 
@@ -28,7 +28,7 @@ InterfaceData.actions = [
 		name: 'resume',
 		type: 'action',
 		defaultVal: function () {
-			Interface.PS.resume();
+			window.Interface.PS.resume();
 		}
 	},
 
@@ -36,7 +36,7 @@ InterfaceData.actions = [
 		name: 'empty',
 		type: 'action',
 		defaultVal: function () {
-			Interface.PS.empty();
+			window.Interface.PS.empty();
 		}
 	},
 
@@ -44,7 +44,7 @@ InterfaceData.actions = [
 		name: 'getCode',
 		type: 'action',
 		defaultVal: function () {
-			Interface.getCode();
+			window.Interface.getCode();
 		}
 	}
 ];

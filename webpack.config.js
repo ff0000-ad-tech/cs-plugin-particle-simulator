@@ -52,7 +52,7 @@ module.exports = {
     ])
   ],
   devServer: {
-    contentBase: path.join(__dirname, 'dist'),
+    contentBase: PATHS.dist,
     compress: true,
     port: 8000
   }

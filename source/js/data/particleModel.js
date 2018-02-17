@@ -1,16 +1,15 @@
-var InterfaceData = InterfaceData || {};
-InterfaceData.particleModel = [
+export const particleModel = [
 
 	{
 		name: 'addParticleModel',
 		type: 'action', 
 		defaultVal: function () {
-			Interface.addParticleModel();
+			window.Interface.addParticleModel();
 		}
 	}
 ];
 
-InterfaceData.getDefaultNewParticleModelData = function ( name ) {
+export const getDefaultNewParticleModelData = function ( name ) {
 
 	return [
 		{
@@ -24,8 +23,8 @@ InterfaceData.getDefaultNewParticleModelData = function ( name ) {
 		{
 			name: name + 'ImageName',
 			type: 'dropdown',
-			defaultVal: App.imageNameArray[ 0 ] || '',
-			options: App.imageNameArray,
+			defaultVal: window.App.imageNameArray[ 0 ] || '',
+			options: window.App.imageNameArray,
 			modelKey: 'image'
 		},
 
@@ -79,7 +78,7 @@ InterfaceData.getDefaultNewParticleModelData = function ( name ) {
 			type: 'action',
 			modelKey: null,
 			defaultVal: function () {
-				Interface.deleteParticleModel( name );
+				window.Interface.deleteParticleModel( name );
 			}
 
 		}
