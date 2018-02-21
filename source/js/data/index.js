@@ -1,7 +1,7 @@
 import actions from './actions'
 import emitterPhysics from './emitterPhysics'
 import styleAnimation from './styleAnimation'
-import { getDefaultNewParticleModelData, particleModel } from './particleModeld'
+import { getDefaultNewParticleModelData, particleModel } from './particleModel'
 
 const InterfaceData = {
   actions,

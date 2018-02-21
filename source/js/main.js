@@ -3,77 +3,71 @@
 */
 
 import './dat.gui.custoom'
+import superagent from 'superagent'
 import Interface from './Interface'
+import {getParamInQueryString, getAdPathFromUrl, parseAdSize, mergePath} from './utils/functions'
+import {preloadImages} from './utils/preload'
+import {set, get} from './globalSetting'
 
+const IMAGE_PATH_PATTERN = /\/([a-zA-Z0-9_.-]*)\.(png|jpg|jpeg)/
 
-// import all the deps
-// import dynamic emitter data (import should work in Chrome...)
-// import AdApp generated config for build path
-// load fba pay load 
-// redistribute images
-// init interface
-
-// use the 
-const defaultSetting = {
-	debuge: false,
-	fps: 60,
-	emitterDataName: 'EmitterData',
-	emitterDataPath: 'EmitterData.js',
-	adWidth: 300,
-	adHeight: 250
+// TO REMOVE: mock API contnet from Node
+const FAKE_API = {
+	imagePaths: [],
+	emitterDataFiles: ['emitterData.js']
 }
 
-// Utils
-const getParamInQueryString = function(name) {
-	name = name.replace( /[\[]/, "\\[").replace(/[\]]/, "\\]" );
-	var regex = new RegExp( "[\\?&]" + name + "=([^&#]*)" );
-	var results = regex.exec( location.search );
-	return results === null ? null : decodeURIComponent( results[ 1 ].replace(/\+/g, ' ' ));
+function updateSetting(content, imageObj) {
+	const adPath = getAdPathFromUrl()
+	const adSize = parseAdSize(setting)
+
+	set('adPath', adPath)
+	set('adWidth', adSize[0])
+	set('adHeight', adSize[1])
+	set('imagePaths', content.images)
+	set('loadedImages', imageObj)
+	set('emitterDataFiles', content.emitterDataFiles)
 }
 
-const parseAdSize = function(path) {
-	var sizeReg = /(\d+)x(\d+)/;
-	if (sizeReg.test(path)) {
-		var result = sizeReg.exec(path);
-
-		return {
-			width: result[1],
-			height: result[2]
-		}
-	}
-
-	return null
-}
-
-const getConfig = function({build_path}) {
-	const customObj = {}
-	const queryKeys = ['debug', 'fps', 'emitterDataName']
-	const size = parseAdSize(build_path)
-
-	queryKeys.forEach((key) => {
-		const val = getParamInQueryString(key)
-		if (val !== null) {
-			customObj[key] = val
-		}
+function shortenImageObjectKeys(imageObj) {
+	const pattern = /\/([a-zA-Z0-9_.-]*)\.(png|jpg|jpeg)/
+	const shortenObj = {}
+	Object.keys(imageObj).forEach((name) => {
+		const result = IMAGE_PATH_PATTERN.exec(name)
+		shortenObj[result[1]] = imageObj[name]
 	})
 
-	if (size !== null) {
-		customObj.adWidth = size.width
-		customObj.adWidth = size.height
-	}
-
-	const result = Object.assign(defaultSetting, customObj)
-
-	return result
+	return shortenObj
 }
 
-const config = getConfig(setting)
+function init(content) {
+	// remove gifs from images to
+	const imagesToLoad = content.imagePaths.filter(item => {
+		return IMAGE_PATH_PATTERN.test(item)
+	})
+	preloadImages({
+		images: imagesToLoad
+	}).then((imageObj) => {
+		const cleanedUpImgObj = shortenImageObjectKeys(imageObj)
+		updateSetting(content, cleanedUpImgObj)
+	})
+	Interface.init()
+}
 
+// TO DO: hook up with API
+// superagent
+// 	.get('url')
+// 	.end((err, res) => {
+// 		if (err) {
+// 			alert('Erro with API. Unable to proceed')
+// 			return
+// 		}
 
+// 		init(res.body)
+// 	})
 
-// Interface.init();
-// export default 
-
+// TO REMOVE: after API is done
+init(FAKE_API)
 
 
 

@@ -23,5 +23,9 @@
     "rimraf": "^2.6.2",
     "webpack": "^3.11.0",
     "webpack-dev-server": "^2.11.1"
+  },
+  "dependencies": {
+    "@ff0000-ad-tech/ad-particles": "^2.0.0",
+    "superagent": "^3.8.2"
   }
 }
