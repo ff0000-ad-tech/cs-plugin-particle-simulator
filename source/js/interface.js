@@ -609,3 +609,6 @@ var Interface = new function () {
 		Dom.removeClass( this.forceGuide, 'show' );
 	}
 }
+
+
+export default Interface

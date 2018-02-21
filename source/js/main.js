@@ -1,13 +1,15 @@
-/*
-	App basic config
-*/
-
-import './dat.gui.custoom'
+import './dat.gui.custom.js'
 import superagent from 'superagent'
+// import {ImageManager} from 'ad-control'
 import Interface from './Interface'
 import {getParamInQueryString, getAdPathFromUrl, parseAdSize, mergePath} from './utils/functions'
 import {preloadImages} from './utils/preload'
 import {set, get} from './globalSetting'
+
+
+class Hello {
+	
+}
 
 const IMAGE_PATH_PATTERN = /\/([a-zA-Z0-9_.-]*)\.(png|jpg|jpeg)/
 
@@ -18,12 +20,14 @@ const FAKE_API = {
 }
 
 function updateSetting(content, imageObj) {
-	const adPath = getAdPathFromUrl()
-	const adSize = parseAdSize(setting)
+	// TO REMOVE: temp setting
+	// const adPath = getAdPathFromUrl()
+	const adPath = '300x250'
+	const adSize = parseAdSize(adPath)
 
 	set('adPath', adPath)
-	set('adWidth', adSize[0])
-	set('adHeight', adSize[1])
+	set('adWidth', adSize.width)
+	set('adHeight', adSize.height)
 	set('imagePaths', content.images)
 	set('loadedImages', imageObj)
 	set('emitterDataFiles', content.emitterDataFiles)
@@ -50,8 +54,8 @@ function init(content) {
 	}).then((imageObj) => {
 		const cleanedUpImgObj = shortenImageObjectKeys(imageObj)
 		updateSetting(content, cleanedUpImgObj)
+		Interface.init()
 	})
-	Interface.init()
 }
 
 // TO DO: hook up with API

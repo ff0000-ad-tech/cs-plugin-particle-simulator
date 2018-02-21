@@ -20,7 +20,7 @@ export function preloadImages({ images = [], imageRoot = '', onUpdate = () => {}
     }
     // resolve if no images to load
     if (!totalImage) {
-      resolve()
+      resolve({})
     }
 
     for (let i = 0; i < images.length; i++) {

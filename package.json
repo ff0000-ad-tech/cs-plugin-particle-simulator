@@ -15,9 +15,11 @@
   "author": "Nico Hsieh",
   "license": "ISC",
   "devDependencies": {
+    "@babel/preset-env": "^7.0.0-beta.40",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "copy-webpack-plugin": "^4.4.1",
     "path": "^0.12.7",
     "rimraf": "^2.6.2",
@@ -25,6 +27,7 @@
     "webpack-dev-server": "^2.11.1"
   },
   "dependencies": {
+    "@ff0000-ad-tech/ad-control": "^1.2.0",
     "@ff0000-ad-tech/ad-particles": "^2.0.0",
     "superagent": "^3.8.2"
   }
