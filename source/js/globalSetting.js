@@ -1,3 +1,5 @@
+import data from './debug/EmitterData'
+
 const setting = {
   debug: false,
   imagePaths: [],
@@ -5,11 +7,12 @@ const setting = {
 	emitterDataFiles: [],
 	selectedEmitterDataFile: 'EmitterData.js',
 	emitterDataPath: 'js',
-	emitterDataContent: {},
+	emitterDataContent: data,
 	imagePath: 'images',
 	adPath: '',
 	adWidth: '',
 	adHeight: '',
+	fps: 60
 }
 
 export const set = (name, val) => {

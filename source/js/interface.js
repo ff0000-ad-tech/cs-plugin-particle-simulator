@@ -1,6 +1,6 @@
 import {Emitter} from 'ad-particles'
 import {get} from './globalSetting'
-import InterfaceData from './data/index'
+import getInterfaceData from './data/index'
 import Dom from './utils/Dom'
 
 class Interface {
@@ -10,6 +10,7 @@ class Interface {
 		this.adHeight = get('adHeight')
 		this.emitterData = get('emitterDataContent')
 		this.fps = get('fps')
+		this.data = getInterfaceData(this)
 
 		this.buildInterface()
 	}
@@ -20,12 +21,12 @@ class Interface {
 		this.guiInterfaces = [];
 
 		//generate Emitting, Physics property interface
-		this.psControl = new this.generateControl( InterfaceData.emitterPhysics );
-		this.genertateInterface( InterfaceData.emitterPhysics, this.psControl );
+		this.psControl = new this.generateControl( this.data.emitterPhysics );
+		this.genertateInterface( this.data.emitterPhysics, this.psControl );
 
 		//generate Style, Animation property interface
-		this.styleControl = new this.generateControl( InterfaceData.styleAnimation );
-		this.genertateInterface( InterfaceData.styleAnimation, this.styleControl );
+		this.styleControl = new this.generateControl( this.data.styleAnimation );
+		this.genertateInterface( this.data.styleAnimation, this.styleControl );
 
 		//generate Add Model interface
 		this.activeModels = [];
@@ -34,8 +35,8 @@ class Interface {
 		this.modelGui = this.genertateInterface( modelData, this.modelControl );
 
 		//generate Action interface
-		this.actionControl = new this.generateControl( InterfaceData.actions );
-		this.genertateInterface( InterfaceData.actions, this.actionControl );
+		this.actionControl = new this.generateControl( this.data.actions );
+		this.genertateInterface( this.data.actions, this.actionControl );
 
 		//get the elements to use later
 		this.interfaceContainer = Dom.getBy( '.ac' )[ 0 ];
@@ -158,7 +159,7 @@ class Interface {
 		var obj = {
 				name: name,
 				type: 'folder',
-				children: InterfaceData.getDefaultNewParticleModelData( name )
+				children: this.data.getDefaultNewParticleModelData( name )
 			};
 
 		this.activeModels.push( name );
@@ -224,7 +225,7 @@ class Interface {
 	generateParticleModelData = () => {
 		this.modelIndex = 0;
 		//check the present model
-		var data = InterfaceData.particleModel;
+		var data = this.data.particleModel;
 		var models = this.getPSProp( 'particleModels' );
 		var i;
 		for( i=0; i<models.length; i++ ) {
@@ -234,7 +235,7 @@ class Interface {
 			var obj = {
 				name: name,
 				type: 'folder',
-				children: InterfaceData.getDefaultNewParticleModelData( name )
+				children: this.data.getDefaultNewParticleModelData( name )
 			};
 			
 			obj.children.forEach( function( item ) {

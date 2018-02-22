@@ -9,10 +9,6 @@ import {set, get} from './globalSetting'
 
 const IMAGE_PATH_PATTERN = /\/([a-zA-Z0-9_.-]*)\.(png|jpg|jpeg)/
 
-class Hello {
-
-}
-
 // TO REMOVE: mock API contnet from Node
 const FAKE_API = {
 	imagePaths: [],
