@@ -1,15 +1,10 @@
 import './dat.gui.custom.js'
 import superagent from 'superagent'
-// import {ImageManager} from 'ad-control'
+import {ImageManager} from 'ad-control'
 import Interface from './Interface'
 import {getParamInQueryString, getAdPathFromUrl, parseAdSize, mergePath} from './utils/functions'
 import {preloadImages} from './utils/preload'
 import {set, get} from './globalSetting'
-
-
-class Hello {
-	
-}
 
 const IMAGE_PATH_PATTERN = /\/([a-zA-Z0-9_.-]*)\.(png|jpg|jpeg)/
 

@@ -18,14 +18,15 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\*.js/,
-        loader: 'babel-loader',
-        exclude: /node_modules/,
-        // include: path.join(__dirname, 'node_modules', '@ff0000-ad-tech'),
-        options: {
-          presets: ['@babel/preset-env'],
-          plugins: ['transform-class-properties']
-        }
+        test: /\.js$/,
+        exclude: /node_modules\/(?!(@ff0000-ad-tech)\/).*/,
+        use: [{
+          loader: 'babel-loader',        
+          options: {
+            presets: ['env'],
+            plugins: ['transform-class-properties']
+          }
+        }]
       }
     ]
   },
