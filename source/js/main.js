@@ -9,6 +9,10 @@ import {set, get} from './globalSetting'
 
 const IMAGE_PATH_PATTERN = /\/([a-zA-Z0-9_.-]*)\.(png|jpg|jpeg)/
 
+class Hello {
+
+}
+
 // TO REMOVE: mock API contnet from Node
 const FAKE_API = {
 	imagePaths: [],
@@ -49,19 +53,15 @@ function init(content) {
 		return IMAGE_PATH_PATTERN.test(item)
 	})
 	
-	if (imagesToLoad.length > 0) {
-		
-		imagesToLoad.forEach((item) => {
-			const path = mergePath(imagePath, item)
-			ImageManager.addToLoad(adPath)
-		})
-	
-		ImageManager.load(() => {
-			updateSetting({content, adPath, loadedImageDict: ImageManager._dict})
-		})
-	} else {
-		updateSetting({content, adPath, loadedImageDict: {}})
-	}
+	imagesToLoad.forEach((item) => {
+		const path = mergePath(imagePath, item)
+		ImageManager.addToLoad(adPath)
+	})
+
+	ImageManager.load(() => {
+		updateSetting({content, adPath, loadedImageDict: ImageManager._dict})
+		window.Interface = new Interface()
+	})
 }
 
 // TO DO: hook up with API

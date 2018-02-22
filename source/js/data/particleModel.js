@@ -1,3 +1,5 @@
+import {get} from '../globalSetting'
+
 export const particleModel = [
 
 	{
@@ -10,6 +12,7 @@ export const particleModel = [
 ];
 
 export const getDefaultNewParticleModelData = function ( name ) {
+	const images = get('loadedImageDict')
 
 	return [
 		{
@@ -23,8 +26,8 @@ export const getDefaultNewParticleModelData = function ( name ) {
 		{
 			name: name + 'ImageName',
 			type: 'dropdown',
-			defaultVal: window.App.imageNameArray[ 0 ] || '',
-			options: window.App.imageNameArray,
+			defaultVal: images[ 0 ] || '',
+			options: images,
 			modelKey: 'image'
 		},
 

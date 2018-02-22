@@ -5,10 +5,11 @@ const setting = {
 	emitterDataFiles: [],
 	selectedEmitterDataFile: 'EmitterData.js',
 	emitterDataPath: 'js',
+	emitterDataContent: {},
 	imagePath: 'images',
 	adPath: '',
 	adWidth: '',
-	adHeight: ''
+	adHeight: '',
 }
 
 export const set = (name, val) => {
