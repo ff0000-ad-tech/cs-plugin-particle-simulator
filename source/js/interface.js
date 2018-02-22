@@ -1,3 +1,5 @@
+import {get} from './globalSetting'
+
 var Interface = new function () {
 
 	var parent = this;
@@ -5,7 +7,7 @@ var Interface = new function () {
 	this.init = function () {
 
 		//preload from image array
-
+		const imagesToLoad = get('loadedImages')
 		if( App.imagesToLoad.length !== 0 ) {
 			ImageManager.addLoader( new Loader( 
 				App.imagesToLoad, { 

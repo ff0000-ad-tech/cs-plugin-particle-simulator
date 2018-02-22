@@ -1,4 +1,3 @@
-// Utils
 export const getParamInQueryString = function(name) {
 	name = name.replace( /[\[]/, "\\[").replace(/[\]]/, "\\]" );
 	var regex = new RegExp( "[\\?&]" + name + "=([^&#]*)" );
@@ -7,14 +6,10 @@ export const getParamInQueryString = function(name) {
 }
 
 export const getAdPathFromUrl = function() {
-	const path = window.location.pathname
-	const pattern = /^\/ps\/([a-zA-Z0-9_.-]*)\//
-	if (pattern.test(path)) {
-		const result = pattern.exec(path)
-		return result[1]
-	}
+	const {origin, pathname} = window.location
+	const adPath = mergePath(origin, '1-build', pathname)
 
-	return null
+	return adPath
 }
 
 export const parseAdSize = function(path) {
@@ -33,15 +28,19 @@ export const parseAdSize = function(path) {
 
 export const mergePath = function() {
 	let path = ''
+	const endSlash = /\/+$/g
+	const startEndSlash = /^\/+|\/+$/g
 	for(let i = 0; i < arguments.length; i++) {
 		const item = arguments[i]
 		let name = ''
 		if (i === 0) {
-			name = item.replace(/\/+$/g, '')
+			name = item.replace(endSlash, '')
 		} else {
-			name = item.replace(/^\/+|\/+$/g, '')
+			name = item.replace(startEndSlash, '')
 		}
 		path += `${name}/`
 	}
+
+	path = path.replace(endSlash, '/')
 	return path
 }

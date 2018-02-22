@@ -1,6 +1,7 @@
 import './dat.gui.custom.js'
 import superagent from 'superagent'
 import {ImageManager} from 'ad-control'
+import {Loader} from 'ad-load'
 import Interface from './Interface'
 import {getParamInQueryString, getAdPathFromUrl, parseAdSize, mergePath} from './utils/functions'
 import {preloadImages} from './utils/preload'
@@ -14,17 +15,15 @@ const FAKE_API = {
 	emitterDataFiles: ['emitterData.js']
 }
 
-function updateSetting(content, imageObj) {
-	// TO REMOVE: temp setting
-	// const adPath = getAdPathFromUrl()
-	const adPath = '300x250'
+function updateSetting({content, adPath, loadedImageDict}) {
+	
 	const adSize = parseAdSize(adPath)
 
 	set('adPath', adPath)
 	set('adWidth', adSize.width)
 	set('adHeight', adSize.height)
 	set('imagePaths', content.images)
-	set('loadedImages', imageObj)
+	set('loadedImageDict', loadedImageDict)
 	set('emitterDataFiles', content.emitterDataFiles)
 }
 
@@ -40,17 +39,29 @@ function shortenImageObjectKeys(imageObj) {
 }
 
 function init(content) {
-	// remove gifs from images to
+	// TO DO: use the real URL
+	const adPath = getAdPathFromUrl() + '300x250/'
+	const imagePath = mergePath(adPath, get('imagePath'))
+
+
+	// remove gifs from images
 	const imagesToLoad = content.imagePaths.filter(item => {
 		return IMAGE_PATH_PATTERN.test(item)
 	})
-	preloadImages({
-		images: imagesToLoad
-	}).then((imageObj) => {
-		const cleanedUpImgObj = shortenImageObjectKeys(imageObj)
-		updateSetting(content, cleanedUpImgObj)
-		Interface.init()
-	})
+	
+	if (imagesToLoad.length > 0) {
+		
+		imagesToLoad.forEach((item) => {
+			const path = mergePath(imagePath, item)
+			ImageManager.addToLoad(adPath)
+		})
+	
+		ImageManager.load(() => {
+			updateSetting({content, adPath, loadedImageDict: ImageManager._dict})
+		})
+	} else {
+		updateSetting({content, adPath, loadedImageDict: {}})
+	}
 }
 
 // TO DO: hook up with API

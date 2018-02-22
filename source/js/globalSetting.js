@@ -1,10 +1,11 @@
 const setting = {
   debug: false,
   imagePaths: [],
-  loadedImages: [],
+  loadedImageDict: [],
 	emitterDataFiles: [],
 	selectedEmitterDataFile: 'EmitterData.js',
 	emitterDataPath: 'js',
+	imagePath: 'images',
 	adPath: '',
 	adWidth: '',
 	adHeight: ''
