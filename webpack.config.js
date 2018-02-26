@@ -28,7 +28,7 @@ module.exports = {
                 "loose": true
               }]
             ],
-            plugins: ['@babel/plugin-proposal-class-properties']
+            plugins: ['@babel/plugin-proposal-class-properties', '@babel/plugin-proposal-object-rest-spread']
           }
         }]
       }
@@ -65,5 +65,5 @@ module.exports = {
     inline: false,
     port: 8000
   },
-  devtool: 'source-map'
+  devtool: 'cheap-source-map'
 }

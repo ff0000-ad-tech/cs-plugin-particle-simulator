@@ -17,7 +17,7 @@ class Interface {
 		this.buildInterface()
 	}
 
-	buildInterface() {
+	buildInterface = () => {
 		this.createPS();
 
 		this.guiInterfaces = [];
@@ -59,7 +59,7 @@ class Interface {
 			top: this.adHeight / 2 - 60 + 'px'
 		});
 
-		this.codeClose.addEventListener( 'click', function () {
+		this.codeClose.addEventListener( 'click', () => {
 			this.codeDisplay.style.display = 'none';
 		}, false );
 
@@ -157,6 +157,7 @@ class Interface {
 	}
 
 	addParticleModel = () => {
+		var self = this
 		var name = 'model' + this.modelIndex;
 		var obj = {
 				name: name,
@@ -171,7 +172,7 @@ class Interface {
 			if( typeof item.defaultVal == 'object' ) {
 				item.defaultVal = JSON.stringify( item.defaultVal, null, 1 );
 			}
-			this.modelControl[ item.name ] = item.defaultVal;
+			self.modelControl[ item.name ] = item.defaultVal;
 		});
 			
 		this.processData( this.modelControl, this.modelGui, obj );
@@ -280,9 +281,8 @@ class Interface {
 	}
 
 
-	processData = ( control, targetGui, obj, parentObj ) => {
+	processData = ( control, targetGui, obj, parentObj = {}) => {
 
-		parentObj = parentObj || {};
 		var singleController;
 
 		switch( obj.type ) {
@@ -299,7 +299,7 @@ class Interface {
 				if( obj.min !== undefined ) {
 					singleController.min( obj.min );
 				}
-				singleController.onFinishChange( function ( val ) {
+				singleController.onFinishChange(( val ) => {
 					window.Interface.setEmitterProperty( obj, val, parentObj );
 					if( parentObj.name === 'world' ) {
 						this.hideGuide( true );
@@ -309,7 +309,7 @@ class Interface {
 
 			case 'color':
 				singleController = targetGui.addColor( control, obj.name );
-				singleController.onChange( function ( val ) {
+				singleController.onChange(( val ) => {
 					window.Interface.setEmitterProperty( obj, val, parentObj );
 				});
 			break;
@@ -319,10 +319,10 @@ class Interface {
 				if( obj.step !== undefined ) {
 					singleController.step( obj.step );
 				}
-				singleController.onChange( function ( val ) {
+				singleController.onChange(( val ) => {
 					window.Interface.setEmitterProperty( obj, val, parentObj );
 				});
-				singleController.onFinishChange( function ( val ) {
+				singleController.onFinishChange(( val ) => {
 					switch( parentObj.name ) {
 						case 'world':
 						case 'origin':
@@ -342,7 +342,7 @@ class Interface {
 
 			case 'dropdown':
 				singleController = targetGui.add( control, obj.name, obj.options );
-				singleController.onFinishChange( function ( val ) {
+				singleController.onFinishChange(( val ) => {
 					window.Interface.setEmitterProperty( obj, val, parentObj );
 					if( parentObj.name === 'origin' ) {
 						this.hideGuide( true );
@@ -523,7 +523,7 @@ class Interface {
 
 	hideGuide( delay ) {
 		var delayTime = delay ? 500 : 0;
-		setTimeout( function () {
+		setTimeout(() => {
 			Dom.removeClass( this.blockGuide, 'show' );
 			Dom.removeClass( this.blockGuide, 'oval' );
 		}, delayTime );

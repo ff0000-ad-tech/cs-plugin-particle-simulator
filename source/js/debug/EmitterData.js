@@ -60,8 +60,8 @@ export default {
 
 	turbulence: {
 		rate: 0.01,
-		xAmplitude: 5,
-		yAmplitude: 5
+		xAmplitude: 0,
+		yAmplitude: 0
 	},
 
 	maxSpeed: 30,
