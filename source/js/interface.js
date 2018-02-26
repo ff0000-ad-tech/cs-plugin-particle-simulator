@@ -1,4 +1,5 @@
 import {Emitter} from 'ad-particles'
+import {Vector2D} from 'ad-geom'
 import {get} from './globalSetting'
 import getInterfaceData from './data/index'
 import Dom from './utils/Dom'
@@ -11,6 +12,7 @@ class Interface {
 		this.emitterData = get('emitterDataContent')
 		this.fps = get('fps')
 		this.data = getInterfaceData(this)
+		this.images = get('loadedImageDict')
 
 		this.buildInterface()
 	}
@@ -21,21 +23,21 @@ class Interface {
 		this.guiInterfaces = [];
 
 		//generate Emitting, Physics property interface
-		this.psControl = new this.generateControl( this.data.emitterPhysics );
+		this.psControl = this.generateControl( this.data.emitterPhysics );
 		this.genertateInterface( this.data.emitterPhysics, this.psControl );
 
 		//generate Style, Animation property interface
-		this.styleControl = new this.generateControl( this.data.styleAnimation );
+		this.styleControl = this.generateControl( this.data.styleAnimation );
 		this.genertateInterface( this.data.styleAnimation, this.styleControl );
 
 		//generate Add Model interface
 		this.activeModels = [];
 		var modelData = this.generateParticleModelData();
-		this.modelControl = new this.generateControl( modelData );
+		this.modelControl = this.generateControl( modelData );
 		this.modelGui = this.genertateInterface( modelData, this.modelControl );
 
 		//generate Action interface
-		this.actionControl = new this.generateControl( this.data.actions );
+		this.actionControl = this.generateControl( this.data.actions );
 		this.genertateInterface( this.data.actions, this.actionControl );
 
 		//get the elements to use later
@@ -197,6 +199,7 @@ class Interface {
 	*/
 
 	generateControl = ( data ) => {
+		var result = {}
 		var i;
 		for( i=0; i<data.length; i++ ) {
 			var obj = data[ i ];
@@ -205,21 +208,22 @@ class Interface {
 				for( k=0; k<obj.children.length; k++ ) {
 					var child = obj.children[ k ];
 					var val = this.syncWithCurrentData( child );
-					this[ child.name ] = val === null ? child.defaultVal : val;
+					result[ child.name ] = val === null ? child.defaultVal : val;
 					if( obj.type === 'action' ) {
-						this[ obj.name ] = this[ obj.name ].bind( this.PS );
+						result[ obj.name ] = result[ obj.name ].bind( this.PS );
 					}
 				}
 
 			} else {
 
 				var val = this.syncWithCurrentData( obj );
-				this[ obj.name ] = val === null ? obj.defaultVal : val;
+				result[ obj.name ] = val === null ? obj.defaultVal : val;
 				if( obj.type === 'action' ) {
-					this[ obj.name ] = this[ obj.name ].bind( this.PS );
+					result[ obj.name ] = result[ obj.name ].bind( this.PS );
 				}
 			}
 		}
+		return result
 	}
 
 	generateParticleModelData = () => {
@@ -276,10 +280,9 @@ class Interface {
 	}
 
 
-	processData( control, targetGui, obj, parentObj ) {
+	processData = ( control, targetGui, obj, parentObj ) => {
 
 		parentObj = parentObj || {};
-		var _this = this;
 		var singleController;
 
 		switch( obj.type ) {
@@ -297,9 +300,9 @@ class Interface {
 					singleController.min( obj.min );
 				}
 				singleController.onFinishChange( function ( val ) {
-					_this.setEmitterProperty( obj, val, parentObj );
+					window.Interface.setEmitterProperty( obj, val, parentObj );
 					if( parentObj.name === 'world' ) {
-						_this.hideGuide( true );
+						this.hideGuide( true );
 					}
 				});
 			break;
@@ -307,7 +310,7 @@ class Interface {
 			case 'color':
 				singleController = targetGui.addColor( control, obj.name );
 				singleController.onChange( function ( val ) {
-					_this.setEmitterProperty( obj, val, parentObj );
+					window.Interface.setEmitterProperty( obj, val, parentObj );
 				});
 			break;
 
@@ -317,19 +320,19 @@ class Interface {
 					singleController.step( obj.step );
 				}
 				singleController.onChange( function ( val ) {
-					_this.setEmitterProperty( obj, val, parentObj );
+					window.Interface.setEmitterProperty( obj, val, parentObj );
 				});
 				singleController.onFinishChange( function ( val ) {
 					switch( parentObj.name ) {
 						case 'world':
 						case 'origin':
-								_this.hideGuide();
+								this.hideGuide();
 						break;
 						case 'velocityAngle':
-							_this.hideVelocityGuide();
+							this.hideVelocityGuide();
 						break;
 						case 'globalForce':
-								_this.hideForceGuide();
+								this.hideForceGuide();
 						break;
 					}
 				});
@@ -340,9 +343,9 @@ class Interface {
 			case 'dropdown':
 				singleController = targetGui.add( control, obj.name, obj.options );
 				singleController.onFinishChange( function ( val ) {
-					_this.setEmitterProperty( obj, val, parentObj );
+					window.Interface.setEmitterProperty( obj, val, parentObj );
 					if( parentObj.name === 'origin' ) {
-						_this.hideGuide( true );
+						this.hideGuide( true );
 					}
 				});
 			break;
@@ -361,7 +364,7 @@ class Interface {
 		Update Emitter when values change
 	*/
 
-	setEmitterProperty( obj, val, parentObj ) {
+	setEmitterProperty = ( obj, val, parentObj ) => {
 		if( obj.type === 'action' ) { return; }
 		parentObj = parentObj || {};
 		var key = obj.map || obj.name;
@@ -464,14 +467,14 @@ class Interface {
 		Initial Sync with Emitter
 	*/
 
-	syncWithCurrentData( obj ) {
+	syncWithCurrentData = ( obj ) => {
 		var key = obj.map || obj.name;
 		var val = null;
 
 		switch( obj.name ) {
 			case 'bgImage':
-				val = this.getPSProp( 'background.image' ) || App.imageNameArray[ 0 ] || '';
-				Interface.PS.set( 'background.image', val );
+				val = this.getPSProp( 'background.image' ) || this.images || '';
+				this.PS.set( 'background.image', val );
 			break;
 
 			default:

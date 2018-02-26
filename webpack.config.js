@@ -19,12 +19,16 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        exclude: /node_modules\/(?!(@ff0000-ad-tech)\/).*/,
+        exclude: /node_modules\/(?!(@ff0000-ad-tech|ad-events|ad-geom)\/).*/,
         use: [{
           loader: 'babel-loader',        
           options: {
-            presets: ['env'],
-            plugins: ['transform-class-properties']
+            "presets": [
+              ["@babel/preset-env", {
+                "loose": true
+              }]
+            ],
+            plugins: ['@babel/plugin-proposal-class-properties']
           }
         }]
       }
@@ -60,5 +64,6 @@ module.exports = {
     compress: true,
     inline: false,
     port: 8000
-  }
+  },
+  devtool: 'source-map'
 }
