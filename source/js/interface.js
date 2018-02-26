@@ -85,12 +85,12 @@ class Interface {
 		this.moveBtn.id = 'move-btn';
 		this.interfaceContainer.appendChild( this.moveBtn );
 
-		this.moveBtn.addEventListener( 'mousedown', function ( evt ) {
+		this.moveBtn.addEventListener( 'mousedown', ( evt ) => {
 			this.dragging = true;
 			this.draggingStart = new Vector2D( evt.clientX, evt.clientY );
 		});
 
-		document.body.addEventListener( 'mousemove', function ( evt ) {
+		document.body.addEventListener( 'mousemove', ( evt ) => {
 			if( !this.dragging ) { return; }
 			this.draggingOffset = new Vector2D( evt.clientX, evt.clientY ).sub( this.draggingStart );
 			this.interfaceOffset.add( this.draggingOffset );
@@ -104,7 +104,7 @@ class Interface {
 			this.draggingStart = new Vector2D( evt.clientX, evt.clientY );
 		});
 
-		document.body.addEventListener( 'mouseup', function ( evt ) {
+		document.body.addEventListener( 'mouseup', ( evt ) => {
 			this.dragging = false;
 		});
 	}
