@@ -14,7 +14,8 @@ export const getParticleModelAction = function(Interface) {
 
 
 export const getDefaultNewParticleModelData = function(Interface) {
-	const images = get('loadedImageDict')
+
+	const images = Interface.images
 	
 	return (name) => {
 	

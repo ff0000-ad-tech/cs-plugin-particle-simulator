@@ -41,6 +41,6 @@ export const mergePath = function() {
 		path += `${name}/`
 	}
 
-	path = path.replace(endSlash, '/')
+	path = path.replace(endSlash, '')
 	return path
 }

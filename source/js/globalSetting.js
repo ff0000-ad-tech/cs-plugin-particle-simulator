@@ -2,7 +2,7 @@ import data from './debug/EmitterData'
 
 const setting = {
   debug: false,
-  imagePaths: [],
+	imagePaths: ['img1.jpg', 'img2.png', 'img3.gif'],
   loadedImageDict: [],
 	emitterDataFiles: [],
 	selectedEmitterDataFile: 'EmitterData.js',

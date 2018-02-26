@@ -4,6 +4,8 @@ import {get} from './globalSetting'
 import getInterfaceData from './data/index'
 import Dom from './utils/Dom'
 
+// TODO: fully migrate all the syntax to ES6
+
 class Interface {
 
 	constructor() {
@@ -11,8 +13,13 @@ class Interface {
 		this.adHeight = get('adHeight')
 		this.emitterData = get('emitterDataContent')
 		this.fps = get('fps')
-		this.data = getInterfaceData(this)
-		this.images = get('loadedImageDict')
+
+		const loadedImages = get('loadedImageDict')
+		this.images = Object.keys(loadedImages).map((name) => {
+			return name
+		})
+
+		this.data = getInterfaceData(this)		
 
 		this.buildInterface()
 	}
@@ -148,9 +155,9 @@ class Interface {
 
 	getCode = () => {
 		var data = this.PS.properties;
-		var tab = '&nbsp;&nbsp;&nbsp;&nbsp;';
+		var tab = '&nbsp;&nbsp;';
 		var str = 'export default '
-		str += JSON.stringify( data, null, 4 );
+		str += JSON.stringify( data, null, 2 );
 
 		this.codeDisplayText.value = str;
 		this.codeDisplay.style.display = 'block';
@@ -473,7 +480,7 @@ class Interface {
 
 		switch( obj.name ) {
 			case 'bgImage':
-				val = this.getPSProp( 'background.image' ) || this.images || '';
+				val = this.getPSProp( 'background.image' ) || this.images[0] || '';
 				this.PS.set( 'background.image', val );
 			break;
 

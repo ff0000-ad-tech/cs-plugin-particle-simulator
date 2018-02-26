@@ -4,14 +4,13 @@ import {ImageManager} from 'ad-control'
 import {Loader} from 'ad-load'
 import Interface from './Interface'
 import {getParamInQueryString, getAdPathFromUrl, parseAdSize, mergePath} from './utils/functions'
-import {preloadImages} from './utils/preload'
 import {set, get} from './globalSetting'
 
-const IMAGE_PATH_PATTERN = /\/([a-zA-Z0-9_.-]*)\.(png|jpg|jpeg)/
+const IMAGE_PATH_PATTERN = /([a-zA-Z0-9_.-]*)\.(png|jpg|jpeg)/
 
 // TO REMOVE: mock API contnet from Node
 const FAKE_API = {
-	imagePaths: [],
+	imagePaths: ['img1.jpg', 'img2.png', 'img3.gif'],
 	emitterDataFiles: ['emitterData.js']
 }
 
@@ -27,22 +26,12 @@ function updateSetting({content, adPath, loadedImageDict}) {
 	set('emitterDataFiles', content.emitterDataFiles)
 }
 
-function shortenImageObjectKeys(imageObj) {
-	const pattern = /\/([a-zA-Z0-9_.-]*)\.(png|jpg|jpeg)/
-	const shortenObj = {}
-	Object.keys(imageObj).forEach((name) => {
-		const result = IMAGE_PATH_PATTERN.exec(name)
-		shortenObj[result[1]] = imageObj[name]
-	})
-
-	return shortenObj
-}
-
 function init(content) {
-	// TO DO: use the real URL
+	// TODO: use the real URL
 	const adPath = getAdPathFromUrl() + '300x250/'
-	const imagePath = mergePath(adPath, get('imagePath'))
-
+	// const adPath = 'http://localhost:8000/images'
+	// const imagePath = mergePath(adPath, get('imagePath'))
+	const imagePath = 'http://localhost:8000/images'
 
 	// remove gifs from images
 	const imagesToLoad = content.imagePaths.filter(item => {
@@ -51,7 +40,7 @@ function init(content) {
 	
 	imagesToLoad.forEach((item) => {
 		const path = mergePath(imagePath, item)
-		ImageManager.addToLoad(adPath)
+		ImageManager.addToLoad(path)
 	})
 
 	ImageManager.load(() => {

@@ -1,4 +1,5 @@
 import {get} from '../globalSetting'
+
 const getStyleAnimationData = function() {
 	const images = get('loadedImageDict')
 	return [
