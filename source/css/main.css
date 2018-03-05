@@ -43,18 +43,29 @@ body {
 	left: 0;
 	right: 0;
 	min-height: 100%;
-	color: white;
 	font-family: Arial;
 	line-height: 17px;
-	background-color: rgba(0, 0, 0, .8);
-	display: none;
+	background-color: rgba(0, 0, 0, .9);
+	opacity: 0;
+	visibility: hidden;
+	pointer-events: none;
 	z-index: 10;
+	transition: .1s opacity ease-out, .01s visibility .1s;
+}
+
+#code-display.show {
+	opacity: 1;
+	visibility: visible;
+	pointer-events: auto;
+	transition: .1s opacity ease-out;
 }
 
 #code-display strong {
 	width: 100%;
 	text-align: center;
+	color: white;
 	font-size: 20px;
+	font-weight: normal;
 	margin: 60px 0 30px;
 	display: block;
 }
@@ -63,12 +74,13 @@ body {
 	position: relative;
 	width: 600px;
 	height: 400px;
-	color: black;
+	color: #56d3ef;
 	font-size: 14px;
 	overflow: auto;
 	margin: 0 auto;
 	padding: 30px;
-	background-color: rgb(0, 195, 255);
+	background-color: rgb(49, 49, 49);
+	border: 1px #3c8ea0 solid;
 	box-sizing: border-box;
 	display: block;
 }
@@ -88,21 +100,19 @@ body {
 
 #code-close-sign {
 	position: absolute;
-    top: 15px;
-    right: 15px;
-	color: rgba(255, 255, 255, .7);
-	font-size: 30px;
+	top: 12px;
+	right: 15px;
 }
 
 #move-btn, #help-btn {
 	position: absolute;
 	left: -20px;
-	width: 27px;
-	height: 27px;
+	width: 25px;
+	height: 25px;
 	background-size: contain;
 	opacity: 0.7;
 	background-color: white;
-	transition: .2s opacity ease-in;
+	transition: .2s opacity ease-out;
 }
 
 #move-btn:hover, #help-btn:hover {
@@ -116,7 +126,7 @@ body {
 }
 
 #help-btn {
-	top: 42px;
+	top: 38px;
 	background-image: url( '../images/help.png' );
 	cursor: pointer;
 }

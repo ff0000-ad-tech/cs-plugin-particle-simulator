@@ -67,7 +67,7 @@ class Interface {
 		});
 
 		this.codeClose.addEventListener( 'click', () => {
-			this.codeDisplay.style.display = 'none';
+			this.codeDisplay.classList.remove('show');
 		}, false );
 
 		this.createMoveBtn();
@@ -160,7 +160,7 @@ class Interface {
 		str += JSON.stringify( data, null, 2 );
 
 		this.codeDisplayText.value = str;
-		this.codeDisplay.style.display = 'block';
+		this.codeDisplay.classList.add('show');
 	}
 
 	addParticleModel = () => {
