@@ -31,7 +31,7 @@ function init(content) {
 	const adPath = getAdPathFromUrl() + '300x250/'
 	// const adPath = 'http://localhost:8000/images'
 	// const imagePath = mergePath(adPath, get('imagePath'))
-	const imagePath = 'http://localhost:8000/images'
+	const imagePath = '/images'
 
 	// remove gifs from images
 	const imagesToLoad = content.imagePaths.filter(item => {
