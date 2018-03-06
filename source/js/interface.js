@@ -4,6 +4,9 @@ import {get} from './globalSetting'
 import getInterfaceData from './data/index'
 import Dom from './utils/Dom'
 
+import data from './debug/EmitterData'
+
+
 // TODO: fully migrate all the syntax to ES6
 
 class Interface {
@@ -11,8 +14,9 @@ class Interface {
 	constructor() {
 		this.adWidth = get('adWidth')
 		this.adHeight = get('adHeight')
-		this.emitterData = get('emitterDataContent')
+		this.emitterData = ''
 		this.fps = get('fps')
+		this.emitterDataFiles = get('emitterDataFiles')
 
 		const loadedImages = get('loadedImageDict')
 		this.images = Object.keys(loadedImages).map((name) => {
@@ -21,7 +25,15 @@ class Interface {
 
 		this.data = getInterfaceData(this)		
 
-		this.buildInterface()
+
+		if (this.emitterDataFiles.length > 1) {
+			this.dataSelector = Dom.getBy('#data-selector');
+			this.showDataSelector(this.emitterDataFiles)
+		} else {
+			// this.emitterData = this.emitterDataFiles[0].content
+			this.emitterData = data
+			this.buildInterface()
+		}
 	}
 
 	buildInterface = () => {
@@ -161,6 +173,28 @@ class Interface {
 
 		this.codeDisplayText.value = str;
 		this.codeDisplay.classList.add('show');
+	}
+
+	showDataSelector = (opts = []) => {
+		// construct the options
+		var el = Dom.getBy('#data-options');
+		opts.forEach((item, index) => {
+			var li = document.createElement('li');
+			li.innerHTML = item.name
+			el.appendChild(li)
+			li.addEventListener('click', () => {
+				this.selectData(index)
+			})
+		})
+		this.dataSelector.classList.add('show');
+	}
+
+	selectData = (index) => {
+		// set the emitter data
+		// this.emitterData = this.emitterDataFiles[index].content
+		this.emitterData = data
+		this.buildInterface()
+		this.dataSelector.classList.remove('show')
 	}
 
 	addParticleModel = () => {

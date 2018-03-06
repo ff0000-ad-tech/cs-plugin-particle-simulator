@@ -1,13 +1,9 @@
-import data from './debug/EmitterData'
-
 const setting = {
   debug: false,
 	imagePaths: ['img1.jpg', 'img2.png', 'img3.gif'],
   loadedImageDict: [],
 	emitterDataFiles: [],
-	selectedEmitterDataFile: 'EmitterData.js',
 	emitterDataPath: 'js',
-	emitterDataContent: data,
 	imagePath: 'images',
 	adPath: '',
 	adWidth: '',

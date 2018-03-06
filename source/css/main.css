@@ -37,7 +37,7 @@ body {
 	transition: .1s opacity;
 }
 
-#code-display {
+#code-display, #data-selector {
 	position: fixed;;
 	top: 0;
 	left: 0;
@@ -45,6 +45,7 @@ body {
 	min-height: 100%;
 	font-family: Arial;
 	line-height: 17px;
+	color: white;
 	background-color: rgba(0, 0, 0, .9);
 	opacity: 0;
 	visibility: hidden;
@@ -53,14 +54,14 @@ body {
 	transition: .1s opacity ease-out, .01s visibility .1s;
 }
 
-#code-display.show {
+#code-display.show, #data-selector.show {
 	opacity: 1;
 	visibility: visible;
 	pointer-events: auto;
 	transition: .1s opacity ease-out;
 }
 
-#code-display strong {
+#code-display strong, #data-selector strong {
 	width: 100%;
 	text-align: center;
 	color: white;
@@ -68,6 +69,10 @@ body {
 	font-weight: normal;
 	margin: 60px 0 30px;
 	display: block;
+}
+#data-selector strong  {
+	font-size: 24px;
+	margin-bottom: 50px;
 }
 
 #code-display-text {
@@ -102,6 +107,34 @@ body {
 	position: absolute;
 	top: 12px;
 	right: 15px;
+}
+
+#selector-wrapper {
+	position: relative;
+	margin: 15% auto 0;
+	width: 350px;
+	text-align: center;
+}
+
+#data-selector ul {
+	width: 100%;
+	padding: 0;
+}
+
+#data-selector li {
+	list-style: none;
+	color: #56d3ef;
+	text-align: center;
+	padding: 10px;
+	margin: 10px 0;
+	border: 1px white solid;
+	cursor: pointer;
+	transition: .1s background-color ease, .1s box-shadow ease;
+}
+
+#data-selector li:hover {
+	background-color: rgba(255, 255, 255, 0.2);
+	box-shadow: 0 0 10px white;
 }
 
 #move-btn, #help-btn {
