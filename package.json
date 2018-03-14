@@ -2,7 +2,7 @@
   "name": "ad-es6-particles",
   "version": "1.0.0",
   "description": "Ad Particles simulator",
-  "main": "index.html",
+  "main": "simulator/index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
