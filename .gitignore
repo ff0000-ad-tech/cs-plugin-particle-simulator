@@ -1,0 +1,5 @@
+.DS_Store
+dev_personal/
+twistd.pid
+node_modules/
+node_modules/*

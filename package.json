@@ -2,7 +2,8 @@
   "name": "ad-es6-particles",
   "version": "1.0.0",
   "description": "Ad Particles simulator",
-  "main": "simulator/index.html",
+  "main": "./simulator/index.html",
+  "api": "./lib/api.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -11,5 +12,9 @@
     "url": "ssh://git@stash.ff0000.com:7999/at/ad-es6-particles.git"
   },
   "author": "Nico Hsieh",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "debug": "git://github.com/gmcdev/debug.git",
+    "minimist": "^1.2.0"
+  }
 }
