@@ -5,8 +5,12 @@
 	"wp-creative-server": {
 		"routes": {
 			"main": "./simulator/index.html",
-			"api": "./lib/api.js",
-			"build-size": "./simulator/index.html"
+			"api": "./lib/api.js"
+		},
+		"hooks": {
+			"build-size": {
+				"Particle Simulator": "./simulator/index.html"
+			}
 		}
 	},
 	"scripts": {
