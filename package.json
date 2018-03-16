@@ -2,8 +2,10 @@
   "name": "ad-es6-particles",
   "version": "1.0.0",
   "description": "Ad Particles simulator",
-  "main": "./simulator/index.html",
-  "api": "./lib/api.js",
+  "wp-creative-server": {
+    "Api": "./lib/api.js",
+    "BuildSizes": "./simulator/index.html"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
