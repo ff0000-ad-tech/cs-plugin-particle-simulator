@@ -3,8 +3,11 @@
 	"version": "1.0.0",
 	"description": "Ad Particles simulator",
 	"wp-creative-server": {
-		"api": "./lib/api.js",
-		"build-size": "./simulator/index.html"
+		"routes": {
+			"main": "./simulator/index.html",
+			"api": "./lib/api.js",
+			"build-size": "./simulator/index.html"
+		}
 	},
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"
