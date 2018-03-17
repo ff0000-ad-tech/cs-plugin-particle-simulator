@@ -2,17 +2,6 @@
 	"name": "ad-es6-particles",
 	"version": "1.0.0",
 	"description": "Ad Particles simulator",
-	"wp-creative-server": {
-		"routes": {
-			"main": "./simulator/index.html",
-			"api": "./lib/api.js"
-		},
-		"hooks": {
-			"build-size": {
-				"Particle Simulator": "./simulator/index.html"
-			}
-		}
-	},
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
@@ -25,5 +14,16 @@
 	"dependencies": {
 		"debug": "git://github.com/gmcdev/debug.git",
 		"minimist": "^1.2.0"
+	},
+	"wp-creative-server": {
+		"routes": {
+			"app": "./simulator/index.html",
+			"api": "./lib/api.js"
+		},
+		"hooks": {
+			"build-size": {
+				"Particle Simulator": "/app"
+			}
+		}
 	}
 }
