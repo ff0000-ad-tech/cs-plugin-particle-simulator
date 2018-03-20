@@ -1,5 +1,4 @@
-var InterfaceData = {};
-InterfaceData.emitterPhysics = [
+export default [
 	{
 		name: 'pickRandomModel',
 		type: 'boolean',

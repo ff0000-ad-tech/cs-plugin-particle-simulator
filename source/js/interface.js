@@ -1,57 +1,63 @@
-var Interface = new function () {
+import {Emitter} from 'ad-particles'
+import {Vector2D} from 'ad-geom'
+import {get} from './globalSetting'
+import getInterfaceData from './data/index'
+import Dom from './utils/Dom'
 
-	var parent = this;
-
-	this.init = function () {
-
-		//preload from image array
-
-		if( App.imagesToLoad.length !== 0 ) {
-			ImageManager.addLoader( new Loader( 
-				App.imagesToLoad, { 
-					name: 'indexImages', 
-					prepend: App.completeBuildPath
-			}));
+import data from './debug/EmitterData'
 
 
-			ImageManager.load( function () {
-				parent.buildInterface();
-			});
+// TODO: fully migrate all the syntax to ES6
 
-			var i;
-			for( i=0; i<App.imagesToLoad.length; i++ ) {
-				var img = App.imagesToLoad[ i ];
-				var name = img.substring( img.lastIndexOf('/') + 1, img.lastIndexOf('.'));
-				App.imageNameArray.push( name );
-			}
+class Interface {
 
+	constructor() {
+		this.adWidth = get('adWidth')
+		this.adHeight = get('adHeight')
+		this.emitterData = ''
+		this.fps = get('fps')
+		this.emitterDataFiles = get('emitterDataFiles')
+
+		const loadedImages = get('loadedImageDict')
+		this.images = Object.keys(loadedImages).map((name) => {
+			return name
+		})
+
+		this.data = getInterfaceData(this)		
+
+
+		if (this.emitterDataFiles.length > 1) {
+			this.dataSelector = Dom.getBy('#data-selector');
+			this.showDataSelector(this.emitterDataFiles)
 		} else {
-			this.buildInterface();
+			// this.emitterData = this.emitterDataFiles[0].content
+			this.emitterData = data
+			this.buildInterface()
 		}
 	}
 
-	this.buildInterface = function () {
+	buildInterface = () => {
 		this.createPS();
 
 		this.guiInterfaces = [];
 
 		//generate Emitting, Physics property interface
-		this.psControl = new this.generateControl( InterfaceData.emitterPhysics );
-		this.genertateInterface( InterfaceData.emitterPhysics, this.psControl );
+		this.psControl = this.generateControl( this.data.emitterPhysics );
+		this.genertateInterface( this.data.emitterPhysics, this.psControl );
 
 		//generate Style, Animation property interface
-		this.styleControl = new this.generateControl( InterfaceData.styleAnimation );
-		this.genertateInterface( InterfaceData.styleAnimation, this.styleControl );
+		this.styleControl = this.generateControl( this.data.styleAnimation );
+		this.genertateInterface( this.data.styleAnimation, this.styleControl );
 
 		//generate Add Model interface
 		this.activeModels = [];
 		var modelData = this.generateParticleModelData();
-		this.modelControl = new this.generateControl( modelData );
+		this.modelControl = this.generateControl( modelData );
 		this.modelGui = this.genertateInterface( modelData, this.modelControl );
 
 		//generate Action interface
-		this.actionControl = new this.generateControl( InterfaceData.actions );
-		this.genertateInterface( InterfaceData.actions, this.actionControl );
+		this.actionControl = this.generateControl( this.data.actions );
+		this.genertateInterface( this.data.actions, this.actionControl );
 
 		//get the elements to use later
 		this.interfaceContainer = Dom.getBy( '.ac' )[ 0 ];
@@ -68,12 +74,12 @@ var Interface = new function () {
 
 		//create, style, add events to additional UI elements
 		Dom.setGroupStyle([ this.velGuide, this.forceGuide ], {
-			left: App.adWidth / 2 - 60 + 'px',
-			top: App.adHeight / 2 - 60 + 'px'
+			left: this.adWidth / 2 - 60 + 'px',
+			top: this.adHeight / 2 - 60 + 'px'
 		});
 
-		this.codeClose.addEventListener( 'click', function () {
-			parent.codeDisplay.style.display = 'none';
+		this.codeClose.addEventListener( 'click', () => {
+			this.codeDisplay.classList.remove('show');
 		}, false );
 
 		this.createMoveBtn();
@@ -84,38 +90,38 @@ var Interface = new function () {
 		Additional UI elements
 	*/
 
-	this.createMoveBtn = function () {
+	createMoveBtn = () => {
 
 		this.interfaceOffset = new Vector2D( 0, 0 );
 		this.moveBtn = document.createElement( 'div' );
 		this.moveBtn.id = 'move-btn';
 		this.interfaceContainer.appendChild( this.moveBtn );
 
-		this.moveBtn.addEventListener( 'mousedown', function ( evt ) {
-			parent.dragging = true;
-			parent.draggingStart = new Vector2D( evt.clientX, evt.clientY );
+		this.moveBtn.addEventListener( 'mousedown', ( evt ) => {
+			this.dragging = true;
+			this.draggingStart = new Vector2D( evt.clientX, evt.clientY );
 		});
 
-		document.body.addEventListener( 'mousemove', function ( evt ) {
-			if( !parent.dragging ) { return; }
-			parent.draggingOffset = new Vector2D( evt.clientX, evt.clientY ).sub( parent.draggingStart );
-			parent.interfaceOffset.add( parent.draggingOffset );
+		document.body.addEventListener( 'mousemove', ( evt ) => {
+			if( !this.dragging ) { return; }
+			this.draggingOffset = new Vector2D( evt.clientX, evt.clientY ).sub( this.draggingStart );
+			this.interfaceOffset.add( this.draggingOffset );
 
-			var top =  parent.interfaceOffset.y + 'px';
-			var right = parent.interfaceOffset.x * -1 + 'px';
+			var top =  this.interfaceOffset.y + 'px';
+			var right = this.interfaceOffset.x * -1 + 'px';
 			
-			parent.interfaceContainer.style.top = top;
-			parent.interfaceContainer.style.right = right;
+			this.interfaceContainer.style.top = top;
+			this.interfaceContainer.style.right = right;
 
-			parent.draggingStart = new Vector2D( evt.clientX, evt.clientY );
+			this.draggingStart = new Vector2D( evt.clientX, evt.clientY );
 		});
 
-		document.body.addEventListener( 'mouseup', function ( evt ) {
-			parent.dragging = false;
+		document.body.addEventListener( 'mouseup', ( evt ) => {
+			this.dragging = false;
 		});
 	}
 
-	this.createHelpBtn = function () {
+	createHelpBtn = () => {
 		var helpBtn = document.createElement( 'a' );
 		helpBtn.id = 'help-btn';
 		helpBtn.href = 'https://confluence.ff0000.com/display/AT/PARTICLES';
@@ -128,30 +134,30 @@ var Interface = new function () {
 		Emitter	
 	*/
 
-	this.createPS = function () {
+	createPS = () => {
 		//canvas element
 		this.canvasEl =  Dom.getBy( '#canvas-el' );
-		this.canvasEl.style.width = App.adWidth + 'px';
-		this.canvasEl.style.height = App.adHeight + 'px';
-		this.canvasEl.width = App.adWidth;
-		this.canvasEl.height = App.adHeight;
+		this.canvasEl.style.width = this.adWidth + 'px';
+		this.canvasEl.style.height = this.adHeight + 'px';
+		this.canvasEl.width = this.adWidth;
+		this.canvasEl.height = this.adHeight;
 
 		//particle system instance
 		var setting = {
-			emitterData: window[ App.emitterDataName ],
-			fps: App.fps
+			emitterData: this.emitterData,
+			fps: this.fps
 		};
 		this.PS = new Emitter();
 		this.PS.init( this.canvasEl, setting );
 		this.PS.emit();
 	}
 
-	this.getPSProp = function ( key, type ) {
+	getPSProp = ( key, type ) => {
 
 		if ( type === 'action' ) {
-			return parent.PS[ key ] || null;
+			return this.PS[ key ] || null;
 		}
-		var val = parent.PS.get( key );
+		var val = this.PS.get( key );
 		return val === undefined ? null : val;
 	}
 
@@ -159,40 +165,62 @@ var Interface = new function () {
 		Actions	
 	*/
 
-	this.getCode = function () {
-		var data = parent.PS.properties;
-		var tab = '&nbsp;&nbsp;&nbsp;&nbsp;';
-		var str = 'var ' + App.emitterDataName + '= ';
-		str += JSON.stringify( data, null, 4 );
-		str += ';';
+	getCode = () => {
+		var data = this.PS.properties;
+		var tab = '&nbsp;&nbsp;';
+		var str = 'export default '
+		str += JSON.stringify( data, null, 2 );
 
-		parent.codeDisplayText.value = str;
-		parent.codeDisplay.style.display = 'block';
+		this.codeDisplayText.value = str;
+		this.codeDisplay.classList.add('show');
 	}
 
-	this.addParticleModel = function () {
-		var name = 'model' + parent.modelIndex;
+	showDataSelector = (opts = []) => {
+		// construct the options
+		var el = Dom.getBy('#data-options');
+		opts.forEach((item, index) => {
+			var li = document.createElement('li');
+			li.innerHTML = item.name
+			el.appendChild(li)
+			li.addEventListener('click', () => {
+				this.selectData(index)
+			})
+		})
+		this.dataSelector.classList.add('show');
+	}
+
+	selectData = (index) => {
+		// set the emitter data
+		// this.emitterData = this.emitterDataFiles[index].content
+		this.emitterData = data
+		this.buildInterface()
+		this.dataSelector.classList.remove('show')
+	}
+
+	addParticleModel = () => {
+		var self = this
+		var name = 'model' + this.modelIndex;
 		var obj = {
 				name: name,
 				type: 'folder',
-				children: InterfaceData.getDefaultNewParticleModelData( name )
+				children: this.data.getDefaultNewParticleModelData( name )
 			};
 
-		parent.activeModels.push( name );
-		parent.modelIndex++;
+		this.activeModels.push( name );
+		this.modelIndex++;
 
 		obj.children.forEach( function( item ){
 			if( typeof item.defaultVal == 'object' ) {
 				item.defaultVal = JSON.stringify( item.defaultVal, null, 1 );
 			}
-			parent.modelControl[ item.name ] = item.defaultVal;
+			self.modelControl[ item.name ] = item.defaultVal;
 		});
 			
-		parent.processData( parent.modelControl, parent.modelGui, obj );
-		parent.updateEmitterModels();
+		this.processData( this.modelControl, this.modelGui, obj );
+		this.updateEmitterModels();
 	}
 
-	this.deleteParticleModel = function ( name ) {
+	deleteParticleModel = ( name ) => {
 		//TODO: remove it from dat gui
 		var el = Dom.getBy( '#' + name );
 		el.parentNode.removeChild( el );
@@ -212,7 +240,8 @@ var Interface = new function () {
 		Generating controls
 	*/
 
-	this.generateControl = function ( data ) {
+	generateControl = ( data ) => {
+		var result = {}
 		var i;
 		for( i=0; i<data.length; i++ ) {
 			var obj = data[ i ];
@@ -220,28 +249,29 @@ var Interface = new function () {
 				var k;
 				for( k=0; k<obj.children.length; k++ ) {
 					var child = obj.children[ k ];
-					var val = parent.syncWithCurrentData( child );
-					this[ child.name ] = val === null ? child.defaultVal : val;
+					var val = this.syncWithCurrentData( child );
+					result[ child.name ] = val === null ? child.defaultVal : val;
 					if( obj.type === 'action' ) {
-						this[ obj.name ] = this[ obj.name ].bind( parent.PS );
+						result[ obj.name ] = result[ obj.name ].bind( this.PS );
 					}
 				}
 
 			} else {
 
-				var val = parent.syncWithCurrentData( obj );
-				this[ obj.name ] = val === null ? obj.defaultVal : val;
+				var val = this.syncWithCurrentData( obj );
+				result[ obj.name ] = val === null ? obj.defaultVal : val;
 				if( obj.type === 'action' ) {
-					this[ obj.name ] = this[ obj.name ].bind( parent.PS );
+					result[ obj.name ] = result[ obj.name ].bind( this.PS );
 				}
 			}
 		}
+		return result
 	}
 
-	this.generateParticleModelData = function () {
+	generateParticleModelData = () => {
 		this.modelIndex = 0;
 		//check the present model
-		var data = InterfaceData.particleModel;
+		var data = this.data.particleModel;
 		var models = this.getPSProp( 'particleModels' );
 		var i;
 		for( i=0; i<models.length; i++ ) {
@@ -251,7 +281,7 @@ var Interface = new function () {
 			var obj = {
 				name: name,
 				type: 'folder',
-				children: InterfaceData.getDefaultNewParticleModelData( name )
+				children: this.data.getDefaultNewParticleModelData( name )
 			};
 			
 			obj.children.forEach( function( item ) {
@@ -267,7 +297,7 @@ var Interface = new function () {
 				if ( item.name.indexOf( 'Delete' ) > -1 ) {
 					item.defaultVal = (function (n) {
 						return function () {
-							parent.deleteParticleModel( n );
+							this.deleteParticleModel( n );
 						}
 					})( name );
 				}
@@ -280,7 +310,7 @@ var Interface = new function () {
 		return data;
 	}
 
-	this.genertateInterface = function ( data, target ) {
+	genertateInterface = function ( data, target ) {
 		var gui = new dat.GUI();
 		var i;
 		for( i=0; i<data.length; i++ ) {
@@ -292,10 +322,8 @@ var Interface = new function () {
 	}
 
 
-	this.processData = function ( control, targetGui, obj, parentObj ) {
+	processData = ( control, targetGui, obj, parentObj = {}) => {
 
-		parentObj = parentObj || {};
-		var _this = this;
 		var singleController;
 
 		switch( obj.type ) {
@@ -312,18 +340,18 @@ var Interface = new function () {
 				if( obj.min !== undefined ) {
 					singleController.min( obj.min );
 				}
-				singleController.onFinishChange( function ( val ) {
-					_this.setEmitterProperty( obj, val, parentObj );
+				singleController.onFinishChange(( val ) => {
+					window.Interface.setEmitterProperty( obj, val, parentObj );
 					if( parentObj.name === 'world' ) {
-						_this.hideGuide( true );
+						this.hideGuide( true );
 					}
 				});
 			break;
 
 			case 'color':
 				singleController = targetGui.addColor( control, obj.name );
-				singleController.onChange( function ( val ) {
-					_this.setEmitterProperty( obj, val, parentObj );
+				singleController.onChange(( val ) => {
+					window.Interface.setEmitterProperty( obj, val, parentObj );
 				});
 			break;
 
@@ -332,20 +360,20 @@ var Interface = new function () {
 				if( obj.step !== undefined ) {
 					singleController.step( obj.step );
 				}
-				singleController.onChange( function ( val ) {
-					_this.setEmitterProperty( obj, val, parentObj );
+				singleController.onChange(( val ) => {
+					window.Interface.setEmitterProperty( obj, val, parentObj );
 				});
-				singleController.onFinishChange( function ( val ) {
+				singleController.onFinishChange(( val ) => {
 					switch( parentObj.name ) {
 						case 'world':
 						case 'origin':
-								_this.hideGuide();
+								this.hideGuide();
 						break;
 						case 'velocityAngle':
-							_this.hideVelocityGuide();
+							this.hideVelocityGuide();
 						break;
 						case 'globalForce':
-								_this.hideForceGuide();
+								this.hideForceGuide();
 						break;
 					}
 				});
@@ -355,10 +383,10 @@ var Interface = new function () {
 
 			case 'dropdown':
 				singleController = targetGui.add( control, obj.name, obj.options );
-				singleController.onFinishChange( function ( val ) {
-					_this.setEmitterProperty( obj, val, parentObj );
+				singleController.onFinishChange(( val ) => {
+					window.Interface.setEmitterProperty( obj, val, parentObj );
 					if( parentObj.name === 'origin' ) {
-						_this.hideGuide( true );
+						this.hideGuide( true );
 					}
 				});
 			break;
@@ -377,7 +405,7 @@ var Interface = new function () {
 		Update Emitter when values change
 	*/
 
-	this.setEmitterProperty = function ( obj, val, parentObj ) {
+	setEmitterProperty = ( obj, val, parentObj ) => {
 		if( obj.type === 'action' ) { return; }
 		parentObj = parentObj || {};
 		var key = obj.map || obj.name;
@@ -444,7 +472,7 @@ var Interface = new function () {
 		}
 	}
 
-	this.updateEmitterModels = function () {
+	updateEmitterModels() {
 		var models = [];
 		var mc = this.modelControl;
 		var i;
@@ -480,14 +508,14 @@ var Interface = new function () {
 		Initial Sync with Emitter
 	*/
 
-	this.syncWithCurrentData = function ( obj ) {
+	syncWithCurrentData = ( obj ) => {
 		var key = obj.map || obj.name;
 		var val = null;
 
 		switch( obj.name ) {
 			case 'bgImage':
-				val = this.getPSProp( 'background.image' ) || App.imageNameArray[ 0 ] || '';
-				Interface.PS.set( 'background.image', val );
+				val = this.getPSProp( 'background.image' ) || this.images[0] || '';
+				this.PS.set( 'background.image', val );
 			break;
 
 			default:
@@ -520,7 +548,7 @@ var Interface = new function () {
 		Guide Hints
 	*/
 	
-	this.showGuide = function ( x, y, w, h, shape ) {
+	showGuide = ( x, y, w, h, shape ) => {
 		var style = {
 			left: x + 'px',
 			top: y + 'px',
@@ -534,15 +562,15 @@ var Interface = new function () {
 		}
 	}
 
-	this.hideGuide = function ( delay ) {
+	hideGuide( delay ) {
 		var delayTime = delay ? 500 : 0;
-		setTimeout( function () {
-			Dom.removeClass( parent.blockGuide, 'show' );
-			Dom.removeClass( parent.blockGuide, 'oval' );
+		setTimeout(() => {
+			Dom.removeClass( this.blockGuide, 'show' );
+			Dom.removeClass( this.blockGuide, 'oval' );
 		}, delayTime );
 	}
 
-	this.showVelocityGuide = function ( startAngle, endAngle ) {
+	showVelocityGuide( startAngle, endAngle ) {
 		Dom.addClass( this.velGuide, 'show' );
 		var ctx = this.velGuideCtx;
 		var center = new Vector2D( 60, 60 );
@@ -570,7 +598,7 @@ var Interface = new function () {
 		ctx.closePath();
 	}
 
-	this.showForceGuide = function ( angle ) {
+	showForceGuide( angle ) {
 		Dom.addClass( this.forceGuide, 'show' );
 		var radius = 60;
 		var ctx = this.forceGuideCtx;
@@ -601,11 +629,14 @@ var Interface = new function () {
 		ctx.closePath();
 	}
 
-	this.hideVelocityGuide = function () {
+	hideVelocityGuide() {
 		Dom.removeClass( this.velGuide, 'show' );
 	}
 
-	this.hideForceGuide = function () {
+	hideForceGuide() {
 		Dom.removeClass( this.forceGuide, 'show' );
 	}
 }
+
+
+export default Interface

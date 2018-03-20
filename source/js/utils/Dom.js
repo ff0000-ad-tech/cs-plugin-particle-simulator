@@ -1,6 +1,4 @@
-var Dom = Dom || {};
-
-Dom = {
+const Dom = {
 	create: function ( tagName ) {
 		return document.createElement( tagName );
 	},
@@ -42,4 +40,6 @@ Dom = {
 			this.setStyle( elList[ i ], obj );
 		}
 	}
-};
+}
+
+export default Dom
