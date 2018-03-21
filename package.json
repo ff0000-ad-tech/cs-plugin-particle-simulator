@@ -38,7 +38,7 @@
   },
   "wp-creative-server": {
 		"routes": {
-			"app": "./simulator/index.html",
+			"app": "./dist/index.html",
 			"api": "./lib/api.js"
 		},
 		"hooks": {
