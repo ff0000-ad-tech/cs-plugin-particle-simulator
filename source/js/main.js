@@ -34,7 +34,7 @@ function updateSetting({content, adPath, loadedImageNames}) {
 
 function init(content) {
 	// TODO: use the real URL
-	const adPath = getAdPathFromUrl() + '300x250/'
+	const adPath = mergePath(getAdPathFromUrl(), getParamInQueryString('size'))
 	// const adPath = 'http://localhost:8000/images'
 	// const imagePath = mergePath(adPath, get('imagePath'))
 	const imagePath = '/images'
