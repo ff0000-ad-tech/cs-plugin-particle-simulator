@@ -20,7 +20,7 @@ const FAKE_API = {
 	}]
 }
 
-function updateSetting({content, adPath, loadedImageDict}) {
+function updateSetting({content, adPath, loadedImageNames}) {
 	
 	const adSize = parseAdSize(adPath)
 
@@ -28,7 +28,7 @@ function updateSetting({content, adPath, loadedImageDict}) {
 	set('adWidth', adSize.width)
 	set('adHeight', adSize.height)
 	set('imagePaths', content.images)
-	set('loadedImageDict', loadedImageDict)
+	set('loadedImageNames', loadedImageNames)
 	set('emitterDataFiles', content.emitterDataFiles)
 }
 
@@ -50,7 +50,10 @@ function init(content) {
 	})
 
 	ImageManager.load(() => {
-		updateSetting({content, adPath, loadedImageDict: ImageManager._dict})
+		const names = imagesToLoad.map((item) => {
+			return IMAGE_PATH_PATTERN.exec(item)[1]
+		})
+		updateSetting({content, adPath, loadedImageNames: names})
 		window.Interface = new Interface()
 	})
 }

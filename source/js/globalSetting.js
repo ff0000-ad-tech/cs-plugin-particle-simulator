@@ -1,7 +1,7 @@
 const setting = {
   debug: false,
 	imagePaths: ['img1.jpg', 'img2.png', 'img3.gif'],
-  loadedImageDict: [],
+  loadedImageNames: [],
 	emitterDataFiles: [],
 	emitterDataPath: 'js',
 	imagePath: 'images',
@@ -12,7 +12,11 @@ const setting = {
 }
 
 export const set = (name, val) => {
-  setting[name] = val
+	if (name in setting) {
+		setting[name] = val
+	} else {
+		console.error(`Can't set an undefined key in setting: ${name}`)
+	}
 }
 
 export const get = (name) => {

@@ -18,10 +18,7 @@ class Interface {
 		this.fps = get('fps')
 		this.emitterDataFiles = get('emitterDataFiles')
 
-		const loadedImages = get('loadedImageDict')
-		this.images = Object.keys(loadedImages).map((name) => {
-			return name
-		})
+		this.images = get('loadedImageNames')
 
 		this.data = getInterfaceData(this)		
 
