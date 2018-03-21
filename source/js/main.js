@@ -10,7 +10,7 @@ const IMAGE_PATH_PATTERN = /([a-zA-Z0-9_.-]*)\.(png|jpg|jpeg)/
 
 // TO REMOVE: mock API contnet from Node
 const FAKE_API = {
-	imagePaths: ['img1.jpg', 'img2.png', 'img3.gif'],
+	imagePaths: [],
 	emitterDataFiles: [{
 		name: 'emitterData.js',
 		content: ''
