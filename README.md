@@ -12,7 +12,7 @@ This is an updated version of [ad-particles](https://stash.ff0000.com/projects/A
 ## Run the dev version of the project
 `npm start`
 
-## Deploy
-`npm run deploy`
+## Build
+`npm run build`
 
 The deployed version will be in the `dist` folder

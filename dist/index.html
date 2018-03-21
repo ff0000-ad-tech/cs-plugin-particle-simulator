@@ -14,13 +14,19 @@
 			<canvas id="velocity-guide" width=120 height=120></canvas>
 			<canvas id="force-guide" width=120 height=120></canvas>
 			<div id="code-display">
-				<div id="code-close-sign">X</div>
+				<img id="code-close-sign" src="/images/close.png" width=30 />
 				
 				<div id="code-close"></div>
 				<strong>Copy and paste the following code into your EmitterData.js file</strong>
 				<textarea id="code-display-text"></textarea>
 			</div>
-
+			<div id="data-selector">
+				<div id="selector-wrapper">
+					<strong>Select the target EmitterData</strong>
+					<ul id="data-options">
+					</ul>
+				</div>
+			</div>
 		</div>
 		<script>
 			var global = window;
