@@ -17624,6 +17624,7 @@ function () {
         _this.codeDisplay = _Dom.default.getBy('#code-display');
         _this.codeDisplayText = _Dom.default.getBy('#code-display-text');
         _this.codeClose = _Dom.default.getBy('#code-close');
+        _this.saveFile = _Dom.default.getBy('#save');
         _this.velGuide = _Dom.default.getBy('#velocity-guide');
         _this.velGuideCtx = _this.velGuide.getContext('2d');
         _this.forceGuide = _Dom.default.getBy('#force-guide');
@@ -17633,6 +17634,8 @@ function () {
           left: _this.adWidth / 2 - 60 + 'px',
           top: _this.adHeight / 2 - 60 + 'px'
         });
+
+        _this.saveFile.addEventListener('click', _this.saveCode, false);
 
         _this.codeClose.addEventListener('click', function () {
           _this.codeDisplay.classList.remove('show', 'show-message');
@@ -17759,7 +17762,9 @@ function () {
 
           var data = JSON.parse(res.text);
           var msg = JSON.parse(data.stdout);
-          var msgEl = document.getElementById('saved-message');
+
+          var msgEl = _Dom.default.getBy('#saved-message');
+
           msgEl.innerHTML = msg;
 
           _this.codeDisplay.classList.add('show-message');

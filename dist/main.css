@@ -86,7 +86,6 @@ body {
 	flex-flow: column;
 }
 
-
 #save {
 	position: relative;
 	display: inline-block;
@@ -94,6 +93,14 @@ body {
 	margin: 40px auto;
 }
 
+#saved-message {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	max-width: 80%;
+	transform: translate(-50%, -50%);
+	font-size: 25px;
+}
 
 #code-display.show-message .code-wrapper {
 	opacity: 0;
