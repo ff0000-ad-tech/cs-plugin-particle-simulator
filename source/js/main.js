@@ -64,7 +64,11 @@ function formatEmitterData(str) {
 	const pattern = /\{(.*)\}/
 	const data = str.replace(/\r?\n|\r|\s/g, '')
 	const result = pattern.exec(data)
-	return result[0]
+	if (result) {
+		return result[0]
+	}
+
+	return ''
 }
 
 // TO DO: hook up with API

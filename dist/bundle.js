@@ -6593,7 +6593,7 @@ var _adLoad = __webpack_require__(18);
 
 var _Interface = _interopRequireDefault(__webpack_require__(80));
 
-var _functions = __webpack_require__(90);
+var _functions = __webpack_require__(89);
 
 var _globalSetting = __webpack_require__(15);
 
@@ -6659,7 +6659,12 @@ function formatEmitterData(str) {
   var pattern = /\{(.*)\}/;
   var data = str.replace(/\r?\n|\r|\s/g, '');
   var result = pattern.exec(data);
-  return result[0];
+
+  if (result) {
+    return result[0];
+  }
+
+  return '';
 } // TO DO: hook up with API
 
 
@@ -17571,10 +17576,9 @@ var _index = _interopRequireDefault(__webpack_require__(83));
 
 var _Dom = _interopRequireDefault(__webpack_require__(88));
 
-var _EmitterData = _interopRequireDefault(__webpack_require__(89));
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// import data from './debug/EmitterData'
 // TODO: fully migrate all the syntax to ES6
 var Interface =
 /*#__PURE__*/
@@ -17766,10 +17770,9 @@ function () {
       enumerable: true,
       writable: true,
       value: function value(index) {
-        // set the emitter data
-        // this.emitterData = this.emitterDataFiles[index].content
-        // this.emitterData = data
-        eval("window.selectedEmitterData=" + _EmitterData.default);
+        // set the emitter data under global scope
+        var data = _this.emitterDataFiles[index].content;
+        eval("window.selectedEmitterData=" + data);
 
         _this.buildInterface();
 
@@ -18194,7 +18197,7 @@ function () {
       this.showDataSelector(this.emitterDataFiles);
     } else {
       // this.emitterData = this.emitterDataFiles[0].content
-      this.emitterData = _EmitterData.default;
+      this.emitterData = data;
       this.buildInterface();
     }
   }
@@ -19720,129 +19723,6 @@ exports.default = _default;
 
 /***/ }),
 /* 89 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-exports.default = void 0;
-var _default = {
-  particleModels: [{
-    type: 'Circle',
-    id: 'model0',
-    image: '',
-    width: 8,
-    height: 10,
-    probability: 1,
-    properties: {}
-  }],
-  pickRandomModel: true,
-  maxParticleAmount: 800,
-  emitRate: 0.7,
-  emitAmount: 1,
-  killIfOutOfCanvas: true,
-  background: {
-    type: 'none',
-    color: '#005a66',
-    image: '',
-    alpha: 1
-  },
-  clearCanvas: true,
-  world: {
-    active: false,
-    value: [0, 300, 0, 250]
-  },
-  globalForce: {
-    angle: 20,
-    amount: 0
-  },
-  gravityAmount: 0,
-  bounceAmount: 0.3,
-  origin: {
-    value: {
-      x: 60,
-      y: 60
-    },
-    range: {
-      x: 60,
-      y: 60
-    },
-    shape: 'rect'
-  },
-  lifeSpan: {
-    value: 2,
-    range: 0
-  },
-  velocityAngle: {
-    value: 270,
-    range: 120
-  },
-  speed: {
-    value: 1,
-    range: 0.1
-  },
-  turbulence: {
-    rate: 0.01,
-    xAmplitude: 0,
-    yAmplitude: 0
-  },
-  maxSpeed: 30,
-  acceleration: 0.0,
-  alpha: {
-    value: 1,
-    range: 0
-  },
-  scale: {
-    value: 1,
-    range: 0.4
-  },
-  rotation: {
-    value: 0,
-    range: 100
-  },
-  transformOrigin: {
-    x: 0.5,
-    y: 0.5
-  },
-  color: {
-    value: [200, 200, 200],
-    range: [90, 90, 90]
-  },
-  animations: {
-    alpha: {
-      loop: false,
-      duration: 'max',
-      steps: [{
-        s: 0,
-        v: 0
-      }, {
-        s: 0.05,
-        v: 1
-      }, {
-        s: 0.95,
-        v: 1
-      }, {
-        s: 1,
-        v: 0
-      }]
-    },
-    scale: {
-      loop: true,
-      duration: 'max',
-      steps: []
-    },
-    rotation: {
-      loop: true,
-      duration: 0.5,
-      steps: []
-    }
-  }
-};
-exports.default = _default;
-
-/***/ }),
-/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

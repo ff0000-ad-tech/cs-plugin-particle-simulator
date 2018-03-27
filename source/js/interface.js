@@ -4,7 +4,7 @@ import {get} from './globalSetting'
 import getInterfaceData from './data/index'
 import Dom from './utils/Dom'
 
-import data from './debug/EmitterData'
+// import data from './debug/EmitterData'
 
 
 // TODO: fully migrate all the syntax to ES6
@@ -187,9 +187,8 @@ class Interface {
 	}
 
 	selectData = (index) => {
-		// set the emitter data
-		// this.emitterData = this.emitterDataFiles[index].content
-		// this.emitterData = data
+		// set the emitter data under global scope
+		const data = this.emitterDataFiles[index].content
 		eval(`window.selectedEmitterData=${data}`)
 		this.buildInterface()
 		this.dataSelector.classList.remove('show')
