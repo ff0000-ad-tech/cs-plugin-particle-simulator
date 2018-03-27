@@ -81,6 +81,20 @@ body {
 	transition: .3s opacity ease-out .1s, .01s visibility;
 }
 
+#code-display .code-wrapper {
+	display: flex;
+	flex-flow: column;
+}
+
+
+#save {
+	position: relative;
+	display: inline-block;
+	width: 300px;
+	margin: 40px auto;
+}
+
+
 #code-display.show-message .code-wrapper {
 	opacity: 0;
 	transition: .3s opacity ease-out;
