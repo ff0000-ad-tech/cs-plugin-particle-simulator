@@ -17781,6 +17781,7 @@ function () {
         opts.forEach(function (item, index) {
           var li = document.createElement('li');
           li.innerHTML = item.name;
+          li.classList.add('btn');
           el.appendChild(li);
           li.addEventListener('click', function () {
             _this.selectData(index);
