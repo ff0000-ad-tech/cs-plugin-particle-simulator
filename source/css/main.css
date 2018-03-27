@@ -54,6 +54,23 @@ body {
 	transition: .1s opacity ease-out, .01s visibility .1s;
 }
 
+#code-display #saved-message {
+	visibility: hidden;
+	opacity: 0;
+	pointer-events: none;
+}
+
+#code-display.show-message #saved-message {
+	visibility: visible;
+	opacity: 1;
+	transition: .3s opacity ease-out .1s, .01s visibility;
+}
+
+#code-display.show-message .code-wrapper {
+	opacity: 0;
+	transition: .3s opacity ease-out;
+}
+
 #code-display.show, #data-selector.show {
 	opacity: 1;
 	visibility: visible;
