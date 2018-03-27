@@ -154,13 +154,13 @@ body {
 
 #move-btn {
 	top: 3px;
-	background-image: url( '../images/move.png' );
+	background-image: url( './images/move.png' );
 	cursor: move;
 }
 
 #help-btn {
 	top: 38px;
-	background-image: url( '../images/help.png' );
+	background-image: url( './images/help.png' );
 	cursor: pointer;
 }
 
