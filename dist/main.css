@@ -5,6 +5,21 @@ body {
 	font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
 }
 
+.btn {
+	color: #56d3ef;
+	text-align: center;
+	padding: 10px;
+	margin: 10px 0;
+	border: 1px white solid;
+	cursor: pointer;
+	transition: .1s background-color ease, .1s box-shadow ease;
+}
+
+.btn:hover {
+	background-color: rgba(255, 255, 255, 0.2);
+	box-shadow: 0 0 10px white;
+}
+
 #block-guide, #velocity-guide, #force-guide {
 	pointer-events: none;
 }
@@ -140,18 +155,6 @@ body {
 
 #data-selector li {
 	list-style: none;
-	color: #56d3ef;
-	text-align: center;
-	padding: 10px;
-	margin: 10px 0;
-	border: 1px white solid;
-	cursor: pointer;
-	transition: .1s background-color ease, .1s box-shadow ease;
-}
-
-#data-selector li:hover {
-	background-color: rgba(255, 255, 255, 0.2);
-	box-shadow: 0 0 10px white;
 }
 
 #move-btn, #help-btn {
