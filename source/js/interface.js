@@ -141,7 +141,7 @@ class Interface {
 
 		//particle system instance
 		var setting = {
-			emitterData: this.emitterData,
+			emitterData: window.selectedEmitterData,
 			fps: this.fps
 		};
 		this.PS = new Emitter();
@@ -189,7 +189,8 @@ class Interface {
 	selectData = (index) => {
 		// set the emitter data
 		// this.emitterData = this.emitterDataFiles[index].content
-		this.emitterData = data
+		// this.emitterData = data
+		eval(`window.selectedEmitterData=${data}`)
 		this.buildInterface()
 		this.dataSelector.classList.remove('show')
 	}

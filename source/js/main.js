@@ -60,17 +60,32 @@ function init(content) {
 	})
 }
 
+function formatEmitterData(str) {
+	const pattern = /\{(.*)\}/
+	const data = str.replace(/\r?\n|\r|\s/g, '')
+	const result = pattern.exec(data)
+	return result[0]
+}
+
 // TO DO: hook up with API
 superagent
 	.get(`../api?action=getInfo&size=${adSize}`)
 	.end((err, res) => {
-		debugger
 		if (err) {
 			alert('Erro with API. Unable to proceed')
 			return
 		}
 
-		init(JSON.parse(res.stdout))
+		const data = JSON.parse(res.text)
+		const result = JSON.parse(data.stdout)
+
+		result.emitterDataFiles = result.emitterDataFiles.map((item) => {
+			return {
+				name: item.name,
+				content: formatEmitterData(item.content)
+			}
+		})
+		init(result)
 	})
 
 
