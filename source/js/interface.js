@@ -1,3 +1,4 @@
+import superagent from 'superagent'
 import {Emitter} from 'ad-particles'
 import {Vector2D} from 'ad-geom'
 import {get} from './globalSetting'
@@ -76,7 +77,7 @@ class Interface {
 		});
 
 		this.codeClose.addEventListener( 'click', () => {
-			this.codeDisplay.classList.remove('show');
+			this.codeDisplay.classList.remove('show', 'show-message');
 		}, false );
 
 		this.createMoveBtn();
@@ -172,6 +173,25 @@ class Interface {
 		this.codeDisplay.classList.add('show');
 	}
 
+	saveCode = () => {
+		const str = JSON.stringify(this.PS.properties)
+		const size = `${get('adWidth')}x${get('adHeight')}`
+		superagent
+			.get(`../api?action=saveFile&size=${size}&data=${str}&fileName=${this.selectedEmitterDataName}`)
+			.end((err, res) => {
+				if (err) {
+					alert('Erro with API. Unable to save the fil')
+					return
+				}
+				
+				const data = JSON.parse(res.text)
+				const msg = JSON.parse(data.stdout)
+				const msgEl = document.getElementById('saved-message')
+				msgEl.innerHTML = msg
+				this.codeDisplay.classList.add('show-message')
+			})
+	}
+
 	showDataSelector = (opts = []) => {
 		// construct the options
 		var el = Dom.getBy('#data-options');
@@ -188,8 +208,9 @@ class Interface {
 
 	selectData = (index) => {
 		// set the emitter data under global scope
-		const data = this.emitterDataFiles[index].content
-		eval(`window.selectedEmitterData=${data}`)
+		const data = this.emitterDataFiles[index]
+		this.selectedEmitterDataName = data.name
+		eval(`window.selectedEmitterData=${data.content}`)
 		this.buildInterface()
 		this.dataSelector.classList.remove('show')
 	}
