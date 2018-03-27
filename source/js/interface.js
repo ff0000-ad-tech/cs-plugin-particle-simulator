@@ -63,6 +63,7 @@ class Interface {
 		this.codeDisplay = Dom.getBy( '#code-display' );
 		this.codeDisplayText = Dom.getBy( '#code-display-text' );
 		this.codeClose = Dom.getBy( '#code-close' );
+		this.saveFile = Dom.getBy('#save')
 
 		this.velGuide = Dom.getBy( '#velocity-guide' );
 		this.velGuideCtx = this.velGuide.getContext( '2d' );
@@ -75,6 +76,8 @@ class Interface {
 			left: this.adWidth / 2 - 60 + 'px',
 			top: this.adHeight / 2 - 60 + 'px'
 		});
+
+		this.saveFile.addEventListener( 'click', this.saveCode, false );
 
 		this.codeClose.addEventListener( 'click', () => {
 			this.codeDisplay.classList.remove('show', 'show-message');
@@ -186,7 +189,7 @@ class Interface {
 				
 				const data = JSON.parse(res.text)
 				const msg = JSON.parse(data.stdout)
-				const msgEl = document.getElementById('saved-message')
+				const msgEl = Dom.getBy('#saved-message')
 				msgEl.innerHTML = msg
 				this.codeDisplay.classList.add('show-message')
 			})
