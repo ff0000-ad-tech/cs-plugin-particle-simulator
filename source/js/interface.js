@@ -180,7 +180,7 @@ class Interface {
 		const str = JSON.stringify(this.PS.properties)
 		const size = `${get('adWidth')}x${get('adHeight')}`
 		superagent
-			.get(`../api?action=saveFile&size=${size}&data=${str}&fileName=${this.selectedEmitterDataName}`)
+			.get(`../api?action=writeData&size=${size}&data=${str}&fileName=${this.selectedEmitterDataName}`)
 			.end((err, res) => {
 				if (err) {
 					alert('Erro with API. Unable to save the fil')
