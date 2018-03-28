@@ -38,7 +38,7 @@ function updateSetting({content, adPath, loadedImageNames}) {
 function init(content) {
 
 	if (content.emitterDataFiles.length === 0) {
-		const el = Dom.get('data-selector')
+		const el = Dom.get('#data-selector')
 		el.classList.add('show-warning')
 
 		return
