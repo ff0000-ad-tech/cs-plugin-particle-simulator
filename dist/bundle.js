@@ -7608,7 +7608,7 @@ function updateSetting(_ref) {
 
 function init(content) {
   if (content.emitterDataFiles.length === 0) {
-    var el = _Dom.default.get('data-selector');
+    var el = _Dom.default.get('#data-selector');
 
     el.classList.add('show-warning');
     return;
