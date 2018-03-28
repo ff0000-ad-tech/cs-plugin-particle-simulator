@@ -17640,7 +17640,7 @@ function () {
           top: _this.adHeight / 2 - 60 + 'px'
         });
 
-        _this.saveFile.addEventListener('click', _this.saveCode, false);
+        _this.saveFile.addEventListener('click', _this.writeCode, false);
 
         _this.codeClose.addEventListener('click', function () {
           _this.codeDisplay.classList.remove('show', 'show-message');
@@ -17737,7 +17737,7 @@ function () {
         return val === undefined ? null : val;
       }
     });
-    Object.defineProperty(this, "getCode", {
+    Object.defineProperty(this, "publishCode", {
       configurable: true,
       enumerable: true,
       writable: true,
@@ -17751,12 +17751,12 @@ function () {
         _this.codeDisplay.classList.add('show');
       }
     });
-    Object.defineProperty(this, "saveCode", {
+    Object.defineProperty(this, "writeCode", {
       configurable: true,
       enumerable: true,
       writable: true,
       value: function value() {
-        var data = JSON.stringify(_this.PS.properties);
+        var data = "export default " + JSON.stringify(_this.PS.properties, null, 2);
         var size = (0, _globalSetting.get)('adWidth') + "x" + (0, _globalSetting.get)('adHeight');
 
         _superagent.default.post("../api/").send({
@@ -19140,10 +19140,10 @@ var getActions = function getActions(Interface) {
       Interface.PS.empty();
     }
   }, {
-    name: 'getCode',
+    name: 'publishCode',
     type: 'action',
     defaultVal: function defaultVal() {
-      Interface.getCode();
+      Interface.publishCode();
     }
   }];
 };

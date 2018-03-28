@@ -77,7 +77,7 @@ class Interface {
 			top: this.adHeight / 2 - 60 + 'px'
 		});
 
-		this.saveFile.addEventListener( 'click', this.saveCode, false );
+		this.saveFile.addEventListener( 'click', this.writeCode, false );
 
 		this.codeClose.addEventListener( 'click', () => {
 			this.codeDisplay.classList.remove('show', 'show-message');
@@ -166,7 +166,7 @@ class Interface {
 		Actions	
 	*/
 
-	getCode = () => {
+	publishCode = () => {
 		var data = this.PS.properties;
 		var tab = '&nbsp;&nbsp;';
 		var str = 'export default '
@@ -176,8 +176,8 @@ class Interface {
 		this.codeDisplay.classList.add('show');
 	}
 
-	saveCode = () => {
-		const data = JSON.stringify(this.PS.properties)
+	writeCode = () => {
+		const data = `export default ${JSON.stringify(this.PS.properties, null, 2)}`
 		const size = `${get('adWidth')}x${get('adHeight')}`
 		superagent
 			.post(`../api/`)
