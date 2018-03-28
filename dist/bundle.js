@@ -17633,6 +17633,8 @@ var _adParticles = __webpack_require__(82);
 
 var _adGeom = __webpack_require__(2);
 
+var _adUtils = __webpack_require__(0);
+
 var _globalSetting = __webpack_require__(15);
 
 var _index = _interopRequireDefault(__webpack_require__(84));
@@ -18369,7 +18371,7 @@ function () {
     ctx.closePath();
     ctx.beginPath();
     ctx.moveTo(center.x, center.y);
-    ctx.arc(center.x, center.y, 58, MathUtils.toRadians(startAngle), MathUtils.toRadians(endAngle));
+    ctx.arc(center.x, center.y, 58, _adUtils.MathUtils.toRadians(startAngle), _adUtils.MathUtils.toRadians(endAngle));
     ctx.lineTo(center.x, center.y);
     ctx.strokeStyle = 'rgba( 0, 0, 0, .5 )';
     ctx.fillStyle = 'rgba( 0, 200, 255, .4 )';

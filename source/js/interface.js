@@ -1,6 +1,7 @@
 import superagent from 'superagent'
 import {Emitter} from 'ad-particles'
 import {Vector2D} from 'ad-geom'
+import {MathUtils} from 'ad-utils'
 import {get} from './globalSetting'
 import getInterfaceData from './data/index'
 import Dom from './utils/Dom'
