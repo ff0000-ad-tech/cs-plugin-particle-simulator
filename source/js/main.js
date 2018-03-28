@@ -5,6 +5,7 @@ import {Loader} from 'ad-load'
 import Interface from './Interface'
 import {getParamInQueryString, getAdPathFromUrl, parseAdSize, mergePath} from './utils/functions'
 import {set, get} from './globalSetting'
+import Dom from './utils/Dom'
 
 const IMAGE_PATH_PATTERN = /([a-zA-Z0-9_.-]*)\.(png|jpg|jpeg)/
 
@@ -37,8 +38,9 @@ function updateSetting({content, adPath, loadedImageNames}) {
 function init(content) {
 
 	if (content.emitterDataFiles.length === 0) {
+		const el = Dom.get('data-selector')
+		el.classList.add('show-warning')
 
-		alert('No Emitter Data files have been found.')
 		return
 	}
 	// TODO: use the real URL
