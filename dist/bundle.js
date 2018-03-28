@@ -17759,7 +17759,7 @@ function () {
         var data = JSON.stringify(_this.PS.properties);
         var size = (0, _globalSetting.get)('adWidth') + "x" + (0, _globalSetting.get)('adHeight');
 
-        _superagent.default.post("../api").send({
+        _superagent.default.post("../api/").send({
           action: 'writeData',
           size: size,
           data: data,

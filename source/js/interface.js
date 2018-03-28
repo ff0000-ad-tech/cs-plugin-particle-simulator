@@ -180,7 +180,7 @@ class Interface {
 		const data = JSON.stringify(this.PS.properties)
 		const size = `${get('adWidth')}x${get('adHeight')}`
 		superagent
-			.post(`../api`)
+			.post(`../api/`)
 			.send({
 				action: 'writeData',
 				size,
