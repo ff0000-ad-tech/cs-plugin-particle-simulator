@@ -7610,7 +7610,7 @@ function init(content) {
   if (content.emitterDataFiles.length === 0) {
     var el = _Dom.default.getBy('#data-selector');
 
-    el.classList.add('show-warning');
+    el.classList.add('show-warning', 'show');
     return;
   } // TODO: use the real URL
 
