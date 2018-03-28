@@ -39,7 +39,7 @@ function init(content) {
 
 	if (content.emitterDataFiles.length === 0) {
 		const el = Dom.getBy('#data-selector')
-		el.classList.add('show-warning')
+		el.classList.add('show-warning', 'show')
 
 		return
 	}
