@@ -20,6 +20,16 @@ body {
 	box-shadow: 0 0 10px white;
 }
 
+.centered-message {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	max-width: 80%;
+	line-height: 150%;
+	font-size: 22px;
+	transform: translate(-50%, -50%);
+}
+
 #block-guide, #velocity-guide, #force-guide {
 	pointer-events: none;
 }
@@ -93,16 +103,6 @@ body {
 	margin: 40px auto;
 }
 
-#saved-message {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	max-width: 80%;
-	line-height: 150%;
-	font-size: 22px;
-	transform: translate(-50%, -50%);
-}
-
 #code-display.show-message .code-wrapper {
 	opacity: 0;
 	pointer-events: none;
@@ -126,9 +126,21 @@ body {
 	display: block;
 }
 
-#data-selector strong  {
+#data-selector strong {
 	font-size: 24px;
 	margin-bottom: 50px;
+}
+
+#warning {
+	display: none;
+}
+
+#data-selector.show-warning #warning {
+	display: block;
+}
+
+#data-selector.show-warning #selector-wrapper {
+	display: none;
 }
 
 #code-display-text {
