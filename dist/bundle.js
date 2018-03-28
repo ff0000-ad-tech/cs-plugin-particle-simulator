@@ -7553,7 +7553,12 @@ function updateSetting(_ref) {
 }
 
 function init(content) {
-  // TODO: use the real URL
+  if (content.emitterDataFiles.length === 0) {
+    alert('No Emitter Data files have been found.');
+    return;
+  } // TODO: use the real URL
+
+
   var adPath = (0, _functions.mergePath)((0, _functions.getAdPathFromUrl)(), adSize); // const adPath = 'http://localhost:8000/images'
   // const imagePath = mergePath(adPath, get('imagePath'))
 

@@ -35,6 +35,12 @@ function updateSetting({content, adPath, loadedImageNames}) {
 }
 
 function init(content) {
+
+	if (content.emitterDataFiles.length === 0) {
+
+		alert('No Emitter Data files have been found.')
+		return
+	}
 	// TODO: use the real URL
 	const adPath = mergePath(getAdPathFromUrl(), adSize)
 	// const adPath = 'http://localhost:8000/images'
