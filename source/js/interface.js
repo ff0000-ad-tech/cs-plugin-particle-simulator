@@ -177,10 +177,16 @@ class Interface {
 	}
 
 	saveCode = () => {
-		const str = JSON.stringify(this.PS.properties)
+		const data = JSON.stringify(this.PS.properties)
 		const size = `${get('adWidth')}x${get('adHeight')}`
 		superagent
-			.get(`../api?action=writeData&size=${size}&data=${str}&fileName=${this.selectedEmitterDataName}`)
+			.post(`../api`)
+			.send({
+				action: 'writeData',
+				size,
+				data,
+				fileName: this.selectedEmitterDataName
+			})
 			.end((err, res) => {
 				if (err) {
 					alert('Erro with API. Unable to save the fil')

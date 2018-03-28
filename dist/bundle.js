@@ -17751,10 +17751,15 @@ function () {
       enumerable: true,
       writable: true,
       value: function value() {
-        var str = JSON.stringify(_this.PS.properties);
+        var data = JSON.stringify(_this.PS.properties);
         var size = (0, _globalSetting.get)('adWidth') + "x" + (0, _globalSetting.get)('adHeight');
 
-        _superagent.default.get("../api?action=writeData&size=" + size + "&data=" + str + "&fileName=" + _this.selectedEmitterDataName).end(function (err, res) {
+        _superagent.default.post("../api").send({
+          action: 'writeData',
+          size: size,
+          data: data,
+          fileName: _this.selectedEmitterDataName
+        }).end(function (err, res) {
           if (err) {
             alert('Erro with API. Unable to save the fil');
             return;
