@@ -194,9 +194,8 @@ class Interface {
 				}
 				
 				const data = JSON.parse(res.text)
-				const msg = JSON.parse(data.stdout)
 				const msgEl = Dom.getBy('#saved-message')
-				msgEl.innerHTML = msg
+				msgEl.innerHTML = data.stdout
 				this.codeDisplay.classList.add('show-message')
 			})
 	}

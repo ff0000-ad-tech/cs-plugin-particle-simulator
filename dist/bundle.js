@@ -17771,11 +17771,10 @@ function () {
           }
 
           var data = JSON.parse(res.text);
-          var msg = JSON.parse(data.stdout);
 
           var msgEl = _Dom.default.getBy('#saved-message');
 
-          msgEl.innerHTML = msg;
+          msgEl.innerHTML = data.stdout;
 
           _this.codeDisplay.classList.add('show-message');
         });
