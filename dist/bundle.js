@@ -17817,7 +17817,7 @@ function () {
         var data = "export default " + JSON.stringify(_this.PS.properties, null, 2);
         var size = (0, _globalSetting.get)('adWidth') + "x" + (0, _globalSetting.get)('adHeight');
 
-        _superagent.default.post("../api/").send({
+        _superagent.default.post("/ad-es6-particles/api/").send({
           action: 'writeData',
           size: size,
           data: data,
