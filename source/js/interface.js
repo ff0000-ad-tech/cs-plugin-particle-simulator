@@ -181,7 +181,7 @@ class Interface {
 		const data = `export default ${JSON.stringify(this.PS.properties, null, 2)}`
 		const size = `${get('adWidth')}x${get('adHeight')}`
 		superagent
-			.post(`../api/`)
+			.post(`/ad-es6-particles/api/`)
 			.send({
 				action: 'writeData',
 				size,

@@ -7655,7 +7655,7 @@ function formatEmitterData(str) {
 } // TO DO: hook up with API
 
 
-_superagent.default.get("../api/?action=getInfo&size=" + adSize).end(function (err, res) {
+_superagent.default.get("/ad-es6-particles/api/?action=getInfo&size=" + adSize).end(function (err, res) {
   if (err) {
     alert('Erro with API. Unable to proceed');
     return;
@@ -17817,7 +17817,7 @@ function () {
         var data = "export default " + JSON.stringify(_this.PS.properties, null, 2);
         var size = (0, _globalSetting.get)('adWidth') + "x" + (0, _globalSetting.get)('adHeight');
 
-        _superagent.default.post("../api/").send({
+        _superagent.default.post("/ad-es6-particles/api/").send({
           action: 'writeData',
           size: size,
           data: data,
