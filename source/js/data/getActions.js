@@ -42,10 +42,10 @@ const getActions = function (Interface) {
 		},
 	
 		{
-			name: 'getCode',
+			name: 'publishCode',
 			type: 'action',
 			defaultVal: function () {
-				Interface.getCode();
+				Interface.publishCode();
 			}
 		}
 	]

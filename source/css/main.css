@@ -5,6 +5,31 @@ body {
 	font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
 }
 
+.btn {
+	color: #56d3ef;
+	text-align: center;
+	padding: 10px;
+	margin: 10px 0;
+	border: 1px white solid;
+	cursor: pointer;
+	transition: .1s background-color ease, .1s box-shadow ease;
+}
+
+.btn:hover {
+	background-color: rgba(255, 255, 255, 0.2);
+	box-shadow: 0 0 10px white;
+}
+
+.centered-message {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	max-width: 80%;
+	line-height: 150%;
+	font-size: 22px;
+	transform: translate(-50%, -50%);
+}
+
 #block-guide, #velocity-guide, #force-guide {
 	pointer-events: none;
 }
@@ -54,6 +79,36 @@ body {
 	transition: .1s opacity ease-out, .01s visibility .1s;
 }
 
+#code-display #saved-message {
+	visibility: hidden;
+	opacity: 0;
+	pointer-events: none;
+}
+
+#code-display.show-message #saved-message {
+	visibility: visible;
+	opacity: 1;
+	transition: .3s opacity ease-out .1s, .01s visibility;
+}
+
+#code-display .code-wrapper {
+	display: flex;
+	flex-flow: column;
+}
+
+#save {
+	position: relative;
+	display: inline-block;
+	width: 300px;
+	margin: 40px auto;
+}
+
+#code-display.show-message .code-wrapper {
+	opacity: 0;
+	pointer-events: none;
+	transition: .3s opacity ease-out;
+}
+
 #code-display.show, #data-selector.show {
 	opacity: 1;
 	visibility: visible;
@@ -66,13 +121,27 @@ body {
 	text-align: center;
 	color: white;
 	font-size: 20px;
+	line-height: 40px;
 	font-weight: normal;
 	margin: 60px 0 30px;
 	display: block;
 }
-#data-selector strong  {
+
+#data-selector strong {
 	font-size: 24px;
 	margin-bottom: 50px;
+}
+
+#warning {
+	display: none;
+}
+
+#data-selector.show-warning #warning {
+	display: block;
+}
+
+#data-selector.show-warning #selector-wrapper {
+	display: none;
 }
 
 #code-display-text {
@@ -123,18 +192,6 @@ body {
 
 #data-selector li {
 	list-style: none;
-	color: #56d3ef;
-	text-align: center;
-	padding: 10px;
-	margin: 10px 0;
-	border: 1px white solid;
-	cursor: pointer;
-	transition: .1s background-color ease, .1s box-shadow ease;
-}
-
-#data-selector li:hover {
-	background-color: rgba(255, 255, 255, 0.2);
-	box-shadow: 0 0 10px white;
 }
 
 #move-btn, #help-btn {

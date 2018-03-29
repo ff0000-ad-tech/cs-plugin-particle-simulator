@@ -5,8 +5,11 @@ import {Loader} from 'ad-load'
 import Interface from './Interface'
 import {getParamInQueryString, getAdPathFromUrl, parseAdSize, mergePath} from './utils/functions'
 import {set, get} from './globalSetting'
+import Dom from './utils/Dom'
 
 const IMAGE_PATH_PATTERN = /([a-zA-Z0-9_.-]*)\.(png|jpg|jpeg)/
+
+const adSize = getParamInQueryString('size')
 
 // TO REMOVE: mock API contnet from Node
 const FAKE_API = {
@@ -22,19 +25,26 @@ const FAKE_API = {
 
 function updateSetting({content, adPath, loadedImageNames}) {
 	
-	const adSize = parseAdSize(adPath)
+	const adSizeWH = parseAdSize(adPath)
 
 	set('adPath', adPath)
-	set('adWidth', adSize.width)
-	set('adHeight', adSize.height)
+	set('adWidth', adSizeWH.width)
+	set('adHeight', adSizeWH.height)
 	set('imagePaths', content.images)
 	set('loadedImageNames', loadedImageNames)
 	set('emitterDataFiles', content.emitterDataFiles)
 }
 
 function init(content) {
+
+	if (content.emitterDataFiles.length === 0) {
+		const el = Dom.getBy('#data-selector')
+		el.classList.add('show-warning', 'show')
+
+		return
+	}
 	// TODO: use the real URL
-	const adPath = mergePath(getAdPathFromUrl(), getParamInQueryString('size'))
+	const adPath = mergePath(getAdPathFromUrl(), adSize)
 	// const adPath = 'http://localhost:8000/images'
 	// const imagePath = mergePath(adPath, get('imagePath'))
 	const imagePath = '/images'
@@ -58,20 +68,38 @@ function init(content) {
 	})
 }
 
+function formatEmitterData(str) {
+	const pattern = /\{(.*)\}/
+	const data = str.replace(/\r?\n|\r|\s/g, '')
+	const result = pattern.exec(data)
+	if (result) {
+		return result[0]
+	}
+
+	return ''
+}
+
 // TO DO: hook up with API
-// superagent
-// 	.get('url')
-// 	.end((err, res) => {
-// 		if (err) {
-// 			alert('Erro with API. Unable to proceed')
-// 			return
-// 		}
+superagent
+	.get(`../api/?action=getInfo&size=${adSize}`)
+	.end((err, res) => {
+		if (err) {
+			alert('Erro with API. Unable to proceed')
+			return
+		}
 
-// 		init(res.body)
-// 	})
+		const data = JSON.parse(res.text)
+		const result = JSON.parse(data.stdout)
 
-// TO REMOVE: after API is done
-init(FAKE_API)
+		result.emitterDataFiles = result.emitterDataFiles.map((item) => {
+			return {
+				name: item.name,
+				content: formatEmitterData(item.content)
+			}
+		})
+		init(result)
+	})
+
 
 
 

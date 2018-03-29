@@ -1,10 +1,12 @@
+import superagent from 'superagent'
 import {Emitter} from 'ad-particles'
 import {Vector2D} from 'ad-geom'
+import {MathUtils} from 'ad-utils'
 import {get} from './globalSetting'
 import getInterfaceData from './data/index'
 import Dom from './utils/Dom'
 
-import data from './debug/EmitterData'
+// import data from './debug/EmitterData'
 
 
 // TODO: fully migrate all the syntax to ES6
@@ -62,6 +64,7 @@ class Interface {
 		this.codeDisplay = Dom.getBy( '#code-display' );
 		this.codeDisplayText = Dom.getBy( '#code-display-text' );
 		this.codeClose = Dom.getBy( '#code-close' );
+		this.saveFile = Dom.getBy('#save')
 
 		this.velGuide = Dom.getBy( '#velocity-guide' );
 		this.velGuideCtx = this.velGuide.getContext( '2d' );
@@ -75,8 +78,10 @@ class Interface {
 			top: this.adHeight / 2 - 60 + 'px'
 		});
 
+		this.saveFile.addEventListener( 'click', this.writeCode, false );
+
 		this.codeClose.addEventListener( 'click', () => {
-			this.codeDisplay.classList.remove('show');
+			this.codeDisplay.classList.remove('show', 'show-message');
 		}, false );
 
 		this.createMoveBtn();
@@ -141,7 +146,7 @@ class Interface {
 
 		//particle system instance
 		var setting = {
-			emitterData: this.emitterData,
+			emitterData: window.selectedEmitterData,
 			fps: this.fps
 		};
 		this.PS = new Emitter();
@@ -162,7 +167,7 @@ class Interface {
 		Actions	
 	*/
 
-	getCode = () => {
+	publishCode = () => {
 		var data = this.PS.properties;
 		var tab = '&nbsp;&nbsp;';
 		var str = 'export default '
@@ -172,12 +177,37 @@ class Interface {
 		this.codeDisplay.classList.add('show');
 	}
 
+	writeCode = () => {
+		const data = `export default ${JSON.stringify(this.PS.properties, null, 2)}`
+		const size = `${get('adWidth')}x${get('adHeight')}`
+		superagent
+			.post(`../api/`)
+			.send({
+				action: 'writeData',
+				size,
+				data,
+				fileName: this.selectedEmitterDataName
+			})
+			.end((err, res) => {
+				if (err) {
+					alert('Erro with API. Unable to save the fil')
+					return
+				}
+				
+				const data = JSON.parse(res.text)
+				const msgEl = Dom.getBy('#saved-message')
+				msgEl.innerHTML = data.stdout
+				this.codeDisplay.classList.add('show-message')
+			})
+	}
+
 	showDataSelector = (opts = []) => {
 		// construct the options
 		var el = Dom.getBy('#data-options');
 		opts.forEach((item, index) => {
 			var li = document.createElement('li');
 			li.innerHTML = item.name
+			li.classList.add('btn')
 			el.appendChild(li)
 			li.addEventListener('click', () => {
 				this.selectData(index)
@@ -187,9 +217,10 @@ class Interface {
 	}
 
 	selectData = (index) => {
-		// set the emitter data
-		// this.emitterData = this.emitterDataFiles[index].content
-		this.emitterData = data
+		// set the emitter data under global scope
+		const data = this.emitterDataFiles[index]
+		this.selectedEmitterDataName = data.name
+		eval(`window.selectedEmitterData=${data.content}`)
 		this.buildInterface()
 		this.dataSelector.classList.remove('show')
 	}

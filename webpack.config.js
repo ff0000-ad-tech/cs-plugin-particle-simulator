@@ -29,12 +29,12 @@ function getPlugins() {
   ])
   plugins.push(copyPlugin)
 
-  if (isProduction) {
-    const uglifyPlugin = new webpack.optimize.UglifyJsPlugin({
-      test: /\.js($|\?)/i
-    })
-    plugins.push(uglifyPlugin)
-  }
+  // if (isProduction) {
+  //   const uglifyPlugin = new webpack.optimize.UglifyJsPlugin({
+  //     test: /\.js($|\?)/i
+  //   })
+  //   plugins.push(uglifyPlugin)
+  // }
   return plugins
 }
 
