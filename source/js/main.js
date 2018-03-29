@@ -81,7 +81,7 @@ function formatEmitterData(str) {
 
 // TO DO: hook up with API
 superagent
-	.get(`../api/?action=getInfo&size=${adSize}`)
+	.get(`/ad-es6-particles/api/?action=getInfo&size=${adSize}`)
 	.end((err, res) => {
 		if (err) {
 			alert('Erro with API. Unable to proceed')
