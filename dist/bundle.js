@@ -7655,7 +7655,7 @@ function formatEmitterData(str) {
 } // TO DO: hook up with API
 
 
-_superagent.default.get("../api?action=getInfo&size=" + adSize).end(function (err, res) {
+_superagent.default.get("../api/?action=getInfo&size=" + adSize).end(function (err, res) {
   if (err) {
     alert('Erro with API. Unable to proceed');
     return;
