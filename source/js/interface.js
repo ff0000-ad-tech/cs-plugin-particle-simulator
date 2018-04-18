@@ -16,7 +16,6 @@ class Interface {
 	constructor() {
 		this.adWidth = get('adWidth')
 		this.adHeight = get('adHeight')
-		this.emitterData = ''
 		this.fps = get('fps')
 		this.emitterDataFiles = get('emitterDataFiles')
 
@@ -29,8 +28,7 @@ class Interface {
 			this.dataSelector = Dom.getBy('#data-selector');
 			this.showDataSelector(this.emitterDataFiles)
 		} else {
-			// this.emitterData = this.emitterDataFiles[0].content
-			this.emitterData = data
+      eval(`window.selectedEmitterData=${this.emitterDataFiles[0].content}`)
 			this.buildInterface()
 		}
 	}
