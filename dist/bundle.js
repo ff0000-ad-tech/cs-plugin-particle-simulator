@@ -18285,7 +18285,6 @@ function () {
     });
     this.adWidth = (0, _globalSetting.get)('adWidth');
     this.adHeight = (0, _globalSetting.get)('adHeight');
-    this.emitterData = '';
     this.fps = (0, _globalSetting.get)('fps');
     this.emitterDataFiles = (0, _globalSetting.get)('emitterDataFiles');
     this.images = (0, _globalSetting.get)('loadedImageNames');
@@ -18295,8 +18294,7 @@ function () {
       this.dataSelector = _Dom.default.getBy('#data-selector');
       this.showDataSelector(this.emitterDataFiles);
     } else {
-      // this.emitterData = this.emitterDataFiles[0].content
-      this.emitterData = data;
+      eval("window.selectedEmitterData=" + this.emitterDataFiles[0].content);
       this.buildInterface();
     }
   }
