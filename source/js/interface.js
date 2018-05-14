@@ -25,7 +25,7 @@ class Interface {
 			this.showDataSelector(this.emitterDataFiles)
 		} else {
       eval(`window.selectedEmitterData=${this.emitterDataFiles[0].content}`)
-      this.selectedEmitterDataName = this.emitterDataFiles[0]
+      this.selectedEmitterDataName = this.emitterDataFiles[0].name
 			this.buildInterface()
 		}
 	}
