@@ -17643,8 +17643,6 @@ var _Dom = _interopRequireDefault(__webpack_require__(35));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// import data from './debug/EmitterData'
-// TODO: fully migrate all the syntax to ES6
 var Interface =
 /*#__PURE__*/
 function () {
@@ -18295,6 +18293,7 @@ function () {
       this.showDataSelector(this.emitterDataFiles);
     } else {
       eval("window.selectedEmitterData=" + this.emitterDataFiles[0].content);
+      this.selectedEmitterDataName = this.emitterDataFiles[0];
       this.buildInterface();
     }
   }

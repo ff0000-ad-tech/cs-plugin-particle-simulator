@@ -6,10 +6,6 @@ import {get} from './globalSetting'
 import getInterfaceData from './data/index'
 import Dom from './utils/Dom'
 
-// import data from './debug/EmitterData'
-
-
-// TODO: fully migrate all the syntax to ES6
 
 class Interface {
 
@@ -29,6 +25,7 @@ class Interface {
 			this.showDataSelector(this.emitterDataFiles)
 		} else {
       eval(`window.selectedEmitterData=${this.emitterDataFiles[0].content}`)
+      this.selectedEmitterDataName = this.emitterDataFiles[0]
 			this.buildInterface()
 		}
 	}
