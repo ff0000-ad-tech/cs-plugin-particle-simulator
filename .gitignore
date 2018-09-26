@@ -62,3 +62,6 @@ node_modules/
 
 # for some reson zsh has started putting these everywhere
 .oh-my-zsh
+
+# node
+.env
