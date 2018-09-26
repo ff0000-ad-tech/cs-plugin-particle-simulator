@@ -12,35 +12,6 @@ const PATHS = {
 
 console.log(PATHS)
 
-function getPlugins() {
-  const plugins = []
-  const copyPlugin = new CopyWebpackPlugin([
-    {
-      from: path.resolve(PATHS.source, 'index.html'),
-      to: PATHS.dist,
-      flatten: true
-    },
-    {
-      from: path.resolve(PATHS.source, 'css/*'),
-      to: PATHS.dist,
-      flatten: true
-    }, 
-    {
-      from: path.resolve(PATHS.source, 'images/*'),
-      to: path.resolve(PATHS.dist, 'images'),
-      flatten: true
-    }, {
-      from: path.resolve(PATHS.source, 'lib/*'),
-      to: path.resolve(PATHS.dist, 'lib'),
-      flatten: true
-    }
-  ])
-  plugins.push(copyPlugin)
-
-  return plugins
-}
-
-
 module.exports = {
   watch: isProduction ? false : true,
   entry: path.resolve(PATHS.source, 'js/main.js'),
