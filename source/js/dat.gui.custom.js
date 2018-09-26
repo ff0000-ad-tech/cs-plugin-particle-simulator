@@ -1,3 +1,7 @@
+/*
+  This is a custom build of Dat gui that contains some little tweaks for this project specifically
+*/
+
 /**
  * dat-gui JavaScript Controller Library
  * http://code.google.com/p/dat-gui

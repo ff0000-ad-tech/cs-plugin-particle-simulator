@@ -1,6 +1,9 @@
+/*
+  a store for some central variables
+*/
 const setting = {
   debug: false,
-	imagePaths: ['img1.jpg', 'img2.png', 'img3.gif'],
+	imagePaths: [],
   loadedImageNames: [],
 	emitterDataFiles: [],
 	emitterDataPath: 'js',

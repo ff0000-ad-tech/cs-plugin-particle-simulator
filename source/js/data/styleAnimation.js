@@ -1,7 +1,7 @@
 import {get} from '../globalSetting'
 
-const getStyleAnimationData = function() {
-	const images = get('loadedImageDict')
+const getStyleAnimationData = function(Interface) {
+	const images = Interface.images
 	return [
 	
 		// {
@@ -274,7 +274,7 @@ const getStyleAnimationData = function() {
 					name: 'scaleSteps',
 					type: 'text',
 					map: 'animations.scale.steps',
-					defaultVal: '{ r: 0, v: -1 },{ r: 0.1, v: 0 },{ r: 0.9, v: 0 },{ r: 1, v: -1 }'
+					defaultVal: ''
 				}
 			]
 	
@@ -305,7 +305,7 @@ const getStyleAnimationData = function() {
 					name: 'rotationSteps',
 					type: 'text',
 					map: 'animations.rotation.steps',
-					defaultVal: '{ r: 0, v: -1 },{ r: 0.1, v: 0 },{ r: 0.9, v: 0 },{ r: 1, v: -1 }'
+					defaultVal: ''
 				}
 			]
 	
