@@ -6,13 +6,15 @@ This is an updated version Particle Simulator for [ad-particles](https://stash.f
 
 
 ----
+<br>
 ## Installation
 `npm install`
+<br>
 <br>
 ## Development
 To test the dev version of the project, you need to: 
 
-1. Have a [creative server](https://github.com/ff0000-ad-tech/wp-creative-server) that already has Particle Simulator plugin installed. 
+1. Run a [creative server](https://github.com/ff0000-ad-tech/wp-creative-server) that has Particle Simulator plugin installed. 
 
 2. Have a `.env` file at the root of the project. In the `.env` file, add `TARGET_DEV_PATH=[path to the ad-es6-particles in node modules folder in creative server]`
 
@@ -20,12 +22,13 @@ To test the dev version of the project, you need to:
 
 4. All the source files are in `source` folder. Node API is under `source/lib`
 
-5. Webpack will start writing files into the directory you specified. You should be able to reload the simulator in Creative Server to see the front-end changes. For changes in node, you will need to restart Creative Server since it is on the server side.
+5. Webpack will start writing files into the directory you specified. You should be able to refresh the simulator in Creative Server to see the changes.
 
 6. Sometimes Webpack watch copy process doesn't seem to pick up new files, if that happens, just restart `npm run dev`
 <br>
-
+<br>
 ## Build the project for publish
 `npm run build`
 
 The built version will be in the `dist` folder. Merge it into `master` branch and push. That is it!
+Remember to install it in Creative Server again to fully test the published build!
