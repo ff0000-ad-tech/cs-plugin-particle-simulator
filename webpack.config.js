@@ -1,7 +1,6 @@
 const path = require('path')
 const webpack = require('webpack')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
-const rimraf = require('rimraf')
 const dotenv = require('dotenv').config()
 const isProduction = (process.env.NODE_ENV === 'production')
 
@@ -11,12 +10,8 @@ const PATHS = {
   source: path.resolve(__dirname, 'source')
 }
 
-console.log(`lib from: ${path.resolve(PATHS.source, 'lib/*')}`)
-console.log(`lib to: ${path.resolve(TARGET_DEV_PATH, 'lib')}`)
-
-// TODO: move lib to under source
-
 console.log(PATHS)
+
 function getPlugins() {
   const plugins = []
   const copyPlugin = new CopyWebpackPlugin([
@@ -36,18 +31,12 @@ function getPlugins() {
       flatten: true
     }, {
       from: path.resolve(PATHS.source, 'lib/*'),
-      to: path.resolve(TARGET_DEV_PATH, 'lib'),
+      to: path.resolve(PATHS.dist, 'lib'),
       flatten: true
     }
   ])
   plugins.push(copyPlugin)
 
-  if (isProduction) {
-    const uglifyPlugin = new webpack.optimize.UglifyJsPlugin({
-      test: /\.js($|\?)/i
-    })
-    plugins.push(uglifyPlugin)
-  }
   return plugins
 }
 
@@ -85,6 +74,28 @@ module.exports = {
       path.resolve(__dirname, 'node_modules/@ff0000-ad-tech')
     ]
   },  
-  plugins: getPlugins(),
+  plugins: [
+    new CopyWebpackPlugin([
+      {
+        from: path.resolve(PATHS.source, 'index.html'),
+        to: PATHS.dist,
+        flatten: true
+      },
+      {
+        from: path.resolve(PATHS.source, 'css/*'),
+        to: PATHS.dist,
+        flatten: true
+      }, 
+      {
+        from: path.resolve(PATHS.source, 'images/*'),
+        to: path.resolve(PATHS.dist, 'images'),
+        flatten: true
+      }, {
+        from: path.resolve(PATHS.source, 'lib/*'),
+        to: path.resolve(PATHS.dist, 'lib'),
+        flatten: true
+      }
+    ])
+  ],
   devtool: 'cheap-source-map'
 }
