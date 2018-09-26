@@ -75,18 +75,22 @@ superagent
 			return
 		}
 
-		const data = JSON.parse(res.text)
-		const result = JSON.parse(data.stdout)
-
-		result.emitterDataFiles = result.emitterDataFiles.map((item) => {
-			return {
-				name: item.name,
-				content: formatEmitterData(item.content)
-			}
-    })
-    
-    // initialize the app with the API result
-		init(result)
+    try {
+      const data = JSON.parse(res.text)
+      const result = JSON.parse(data.stdout)
+  
+      result.emitterDataFiles = result.emitterDataFiles.map((item) => {
+        return {
+          name: item.name,
+          content: formatEmitterData(item.content)
+        }
+      })
+      
+      // initialize the app with the API result
+      init(result)
+    } catch (e) {
+      alert(e)
+    }
 	})
 
 

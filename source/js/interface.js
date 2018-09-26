@@ -24,7 +24,7 @@ class Interface {
 		} else {
       // when only one emitter data found, use the only one
       // the API already catches the error when there is not emitter data file found
-      eval(`window.selectedEmitterData=${this.emitterDataFiles[0].content}`)
+      this.evalData(this.emitterDataFiles[0].content)
       this.selectedEmitterDataName = this.emitterDataFiles[0].name
 			this.buildInterface()
 		}
@@ -215,11 +215,18 @@ class Interface {
 		// set the emitter data under global scope
 		const data = this.emitterDataFiles[index]
 		this.selectedEmitterDataName = data.name
-		eval(`window.selectedEmitterData=${data.content}`)
+		this.evalData(data.content)
 		this.buildInterface()
 		this.dataSelector.classList.remove('show')
 	}
 
+  evalData = (data) => {
+    try {
+      eval(`window.selectedEmitterData=${data}`)
+    } catch (e) {
+      alert(`${e}\nPlease check your data file`)
+    }
+  }
 	addParticleModel = () => {
 		var self = this
 		var name = 'model' + this.modelIndex;
