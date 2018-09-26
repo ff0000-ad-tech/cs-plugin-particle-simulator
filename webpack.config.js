@@ -11,6 +11,9 @@ const PATHS = {
   source: path.resolve(__dirname, 'source')
 }
 
+console.log(`lib from: ${path.resolve(PATHS.source, 'lib/*')}`)
+console.log(`lib to: ${path.resolve(TARGET_DEV_PATH, 'lib')}`)
+
 // TODO: move lib to under source
 
 console.log(PATHS)
@@ -33,7 +36,8 @@ function getPlugins() {
       flatten: true
     }, {
       from: path.resolve(PATHS.source, 'lib/*'),
-      to: path.resolve(TARGET_DEV_PATH, 'lib')
+      to: path.resolve(TARGET_DEV_PATH, 'lib'),
+      flatten: true
     }
   ])
   plugins.push(copyPlugin)
