@@ -6,9 +6,7 @@ import {get} from './globalSetting'
 import getInterfaceData from './data/index'
 import Dom from './utils/Dom'
 
-
 class Interface {
-
 	constructor() {
 		this.adWidth = get('adWidth')
 		this.adHeight = get('adHeight')
@@ -19,18 +17,21 @@ class Interface {
 
 		this.data = getInterfaceData(this)		
 
-
 		if (this.emitterDataFiles.length > 1) {
-			this.dataSelector = Dom.getBy('#data-selector');
+      // when more than 1 emitter data file found, show the selector
+			this.dataSelector = document.querySelector('#data-selector');
 			this.showDataSelector(this.emitterDataFiles)
 		} else {
-      eval(`window.selectedEmitterData=${this.emitterDataFiles[0].content}`)
+      // when only one emitter data found, use the only one
+      // the API already catches the error when there is not emitter data file found
+      this.evalData(this.emitterDataFiles[0].content)
       this.selectedEmitterDataName = this.emitterDataFiles[0].name
 			this.buildInterface()
 		}
 	}
 
 	buildInterface = () => {
+    // build the interface
 		this.createPS();
 
 		this.guiInterfaces = [];
@@ -54,17 +55,17 @@ class Interface {
 		this.genertateInterface( this.data.actions, this.actionControl );
 
 		//get the elements to use later
-		this.interfaceContainer = Dom.getBy( '.ac' )[ 0 ];
-		this.blockGuide = Dom.getBy( '#block-guide' );
-		this.codeDisplay = Dom.getBy( '#code-display' );
-		this.codeDisplayText = Dom.getBy( '#code-display-text' );
-		this.codeClose = Dom.getBy( '#code-close' );
-		this.saveFile = Dom.getBy('#save')
+		this.interfaceContainer = document.querySelectorAll( '.ac' )[ 0 ];
+		this.blockGuide = document.querySelector( '#block-guide' );
+		this.codeDisplay = document.querySelector( '#code-display' );
+		this.codeDisplayText = document.querySelector( '#code-display-text' );
+		this.codeClose = document.querySelector( '#code-close' );
+		this.saveFile = document.querySelector('#save')
 
-		this.velGuide = Dom.getBy( '#velocity-guide' );
+		this.velGuide = document.querySelector( '#velocity-guide' );
 		this.velGuideCtx = this.velGuide.getContext( '2d' );
 
-		this.forceGuide = Dom.getBy( '#force-guide' );
+		this.forceGuide = document.querySelector( '#force-guide' );
 		this.forceGuideCtx = this.forceGuide.getContext( '2d' );
 
 		//create, style, add events to additional UI elements
@@ -133,7 +134,7 @@ class Interface {
 
 	createPS = () => {
 		//canvas element
-		this.canvasEl =  Dom.getBy( '#canvas-el' );
+		this.canvasEl =  document.querySelector( '#canvas-el' );
 		this.canvasEl.style.width = this.adWidth + 'px';
 		this.canvasEl.style.height = this.adHeight + 'px';
 		this.canvasEl.width = this.adWidth;
@@ -150,7 +151,6 @@ class Interface {
 	}
 
 	getPSProp = ( key, type ) => {
-
 		if ( type === 'action' ) {
 			return this.PS[ key ] || null;
 		}
@@ -190,7 +190,7 @@ class Interface {
 				}
 				
 				const data = JSON.parse(res.text)
-				const msgEl = Dom.getBy('#saved-message')
+				const msgEl = document.querySelector('#saved-message')
 				msgEl.innerHTML = data.stdout
 				this.codeDisplay.classList.add('show-message')
 			})
@@ -198,7 +198,7 @@ class Interface {
 
 	showDataSelector = (opts = []) => {
 		// construct the options
-		var el = Dom.getBy('#data-options');
+		var el = document.querySelector('#data-options');
 		opts.forEach((item, index) => {
 			var li = document.createElement('li');
 			li.innerHTML = item.name
@@ -215,11 +215,18 @@ class Interface {
 		// set the emitter data under global scope
 		const data = this.emitterDataFiles[index]
 		this.selectedEmitterDataName = data.name
-		eval(`window.selectedEmitterData=${data.content}`)
+		this.evalData(data.content)
 		this.buildInterface()
 		this.dataSelector.classList.remove('show')
 	}
 
+  evalData = (data) => {
+    try {
+      eval(`window.selectedEmitterData=${data}`)
+    } catch (e) {
+      alert(`${e}\nPlease check your data file`)
+    }
+  }
 	addParticleModel = () => {
 		var self = this
 		var name = 'model' + this.modelIndex;
@@ -245,7 +252,7 @@ class Interface {
 
 	deleteParticleModel = ( name ) => {
 		//TODO: remove it from dat gui
-		var el = Dom.getBy( '#' + name );
+		var el = document.querySelector( '#' + name );
 		el.parentNode.removeChild( el );
 
 		var i;
@@ -292,6 +299,7 @@ class Interface {
 	}
 
 	generateParticleModelData = () => {
+    const _this = this
 		this.modelIndex = 0;
 		//check the present model
 		var data = this.data.particleModel;
@@ -319,8 +327,8 @@ class Interface {
 				//this can be organized better~~
 				if ( item.name.indexOf( 'Delete' ) > -1 ) {
 					item.defaultVal = (function (n) {
-						return function () {
-							this.deleteParticleModel( n );
+						return () => {
+							_this.deleteParticleModel( n );
 						}
 					})( name );
 				}

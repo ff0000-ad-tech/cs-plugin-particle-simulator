@@ -1,18 +1,34 @@
 # AdTech - Particles (ES6 version)
 ----------------------------------------------------------------
 
-This is an updated version of [ad-particles](https://stash.ff0000.com/projects/AT/repos/ad-particles/browse) to work with #FF0000 Ad Tech ES6 pipeline. The Simulator provides a visual interface to tweak [ad-particles](https://github.com/ff0000-ad-tech/ad-particles) effects in real time. There are more complex and dynamic effects can be achieved programmatically. The simulator can be launched through AdApp. For detail, please see [Confluence doc]( https://stash.ff0000.com/projects/AT/repos/ad-particles/browse).
+This is an updated version Particle Simulator for [ad-particles](https://stash.ff0000.com/projects/AT/repos/ad-particles/browse) to work with #FF0000 Ad Tech ES6 pipeline. The Simulator provides a visual interface to tweak [ad-particles](https://github.com/ff0000-ad-tech/ad-particles) effects in real time. There are more complex and dynamic effects can be achieved programmatically. The simulator can be installed in [Creative Server](https://github.com/ff0000-ad-tech/wp-creative-server). For details, please see [Confluence doc](hhttps://confluence.ff0000.com/display/AT/1.+Simulator+with+Creative+Server).
 
 
 
 ----
-## Install the project for development
+<br>
+## Installation
 `npm install`
+<br>
+<br>
+## Development
+To test the dev version of the project, you need to: 
 
-## Run the dev version of the project
-`npm start`
+1. Run a [creative server](https://github.com/ff0000-ad-tech/wp-creative-server) that has Particle Simulator plugin installed. 
 
-## Build
+2. Have a `.env` file at the root of the project. In the `.env` file, add `TARGET_DEV_PATH=[path to the ad-es6-particles in node modules folder in creative server]`
+
+3. Run `npm run dev`
+
+4. All the source files are in `source` folder. Node API is under `source/lib`
+
+5. Webpack will start writing files into the directory you specified. You should be able to refresh the simulator in Creative Server to see the changes.
+
+6. Sometimes Webpack watch copy process doesn't seem to pick up new files, if that happens, just restart `npm run dev`
+<br>
+<br>
+## Build the project for publish
 `npm run build`
 
-The deployed version will be in the `dist` folder
+The built version will be in the `dist` folder. Merge it into `master` branch and push. That is it!
+Remember to install it in Creative Server again to fully test the published build!

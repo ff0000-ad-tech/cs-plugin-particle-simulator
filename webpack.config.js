@@ -1,45 +1,20 @@
 const path = require('path')
-const webpack = require('webpack')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const dotenv = require('dotenv').config()
 const isProduction = (process.env.NODE_ENV === 'production')
+const debug = require('@ff0000-ad-tech/debug')
+const log = debug('ad-es6-particles: webpack')
 
+const TARGET_DEV_PATH = dotenv.parsed.TARGET_DEV_PATH
 const PATHS = {
-  dist: path.resolve(__dirname, 'dist'),
+  dist: isProduction ? path.resolve(__dirname, 'dist') : path.resolve(TARGET_DEV_PATH, 'dist'),
   source: path.resolve(__dirname, 'source')
 }
 
-function getPlugins() {
-  const plugins = []
-  const copyPlugin = new CopyWebpackPlugin([
-    {
-      from: path.resolve(PATHS.source, 'index.html'),
-      to: PATHS.dist,
-      flatten: true
-    },
-    {
-      from: path.resolve(PATHS.source, 'css/*'),
-      to: PATHS.dist,
-      flatten: true
-    }, 
-    {
-      from: path.resolve(PATHS.source, 'images/*'),
-      to: path.resolve(PATHS.dist, 'images'),
-      flatten: true
-    }
-  ])
-  plugins.push(copyPlugin)
-
-  // if (isProduction) {
-  //   const uglifyPlugin = new webpack.optimize.UglifyJsPlugin({
-  //     test: /\.js($|\?)/i
-  //   })
-  //   plugins.push(uglifyPlugin)
-  // }
-  return plugins
-}
-
+log(PATHS)
 
 module.exports = {
+  watch: isProduction ? false : true,
   entry: path.resolve(PATHS.source, 'js/main.js'),
   output: {
     path: PATHS.dist,
@@ -50,7 +25,7 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        exclude: /node_modules\/(?!(@ff0000-ad-tech|ad-events|ad-geom)\/).*/,
+        exclude: /node_modules\/(?!(@ff0000-ad-tech)\/).*/,
         use: [{
           loader: 'babel-loader',        
           options: {
@@ -71,12 +46,28 @@ module.exports = {
       path.resolve(__dirname, 'node_modules/@ff0000-ad-tech')
     ]
   },  
-  plugins: getPlugins(),
-  devServer: {
-    contentBase: PATHS.dist,
-    compress: true,
-    inline: true,
-    port: 8000
-  },
+  plugins: [
+    new CopyWebpackPlugin([
+      {
+        from: path.resolve(PATHS.source, 'index.html'),
+        to: PATHS.dist,
+        flatten: true
+      },
+      {
+        from: path.resolve(PATHS.source, 'css/*'),
+        to: PATHS.dist,
+        flatten: true
+      }, 
+      {
+        from: path.resolve(PATHS.source, 'images/*'),
+        to: path.resolve(PATHS.dist, 'images'),
+        flatten: true
+      }, {
+        from: path.resolve(PATHS.source, 'lib/*'),
+        to: path.resolve(PATHS.dist, 'lib'),
+        flatten: true
+      }
+    ])
+  ],
   devtool: 'cheap-source-map'
 }

@@ -1,12 +1,11 @@
 const argv = require('minimist')(process.argv.slice(2))
 const path = require('path')
 const fs = require('fs')
-const debug = require('debug')
+const debug = require('@ff0000-ad-tech/debug');
 const log = debug('ad-es6-particles')
 
 
 const { action, size, folders } = argv
-
 if (!size) {
   log('No size is specified')
   return
