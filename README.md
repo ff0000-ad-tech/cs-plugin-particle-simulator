@@ -30,5 +30,5 @@ To test the dev version of the project, you need to:
 ## Build the project for publish
 `npm run build`
 
-The built version will be in the `dist` folder. Merge it into `master` branch and push. That is it!
-Remember to install it in Creative Server again to fully test the published build!
+The built version will be in the `dist` folder. You should test installing the feature branch in Creative Server before merging it into `master`. That is it!
+
