@@ -6,11 +6,11 @@ This is an updated version Particle Simulator for [ad-particles](https://stash.f
 
 
 ----
-<br>
+
 ## Installation
 `npm install`
-<br>
-<br>
+
+
 ## Development
 To test the dev version of the project, you need to: 
 
@@ -25,8 +25,8 @@ To test the dev version of the project, you need to:
 5. Webpack will start writing files into the directory you specified. You should be able to refresh the simulator in Creative Server to see the changes.
 
 6. Sometimes Webpack watch copy process doesn't seem to pick up new files, if that happens, just restart `npm run dev`
-<br>
-<br>
+
+
 ## Build the project for publish
 `npm run build`
 
