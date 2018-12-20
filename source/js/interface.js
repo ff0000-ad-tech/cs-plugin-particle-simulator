@@ -173,12 +173,12 @@ class Interface {
 		var tab = '&nbsp;&nbsp;'
 		var str = ''
 
-		if (data.background.image) {
+		if (data.background.image && data.background.type.toLowerCase() == 'image') {
 			var bg = ImageManager.get(data.background.image)
 			str += `import '@size/images/${bg.src.split('images/')[1]}'\n`
 		}
 		for (var i = 0; i < data.particleModels.length; i++) {
-			if (data.particleModels[i].type == 'Image') {
+			if (data.particleModels[i].type.toLowerCase() == 'image') {
 				var model = ImageManager.get(data.particleModels[i].image)
 				str += `import '@size/images/${model.src.split('images/')[1]}'\n`
 			}
@@ -192,12 +192,12 @@ class Interface {
 
 	writeCode = () => {
 		var str = ''
-		if (this.PS.properties.background.image) {
+		if (this.PS.properties.background.image && this.PS.properties.background.type.toLowerCase() == 'image') {
 			var bg = ImageManager.get(this.PS.properties.background.image)
 			str += `import '@size/images/${bg.src.split('images/')[1]}'\n`
 		}
 		for (var i = 0; i < this.PS.properties.particleModels.length; i++) {
-			if (this.PS.properties.particleModels[i].type == 'Image') {
+			if (this.PS.properties.particleModels[i].type.toLowerCase() == 'image') {
 				var model = ImageManager.get(this.PS.properties.particleModels[i].image)
 				str += `import '@size/images/${model.src.split('images/')[1]}'\n`
 			}
