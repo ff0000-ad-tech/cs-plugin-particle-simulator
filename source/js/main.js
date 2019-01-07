@@ -10,7 +10,7 @@ const IMAGE_PATH_PATTERN = /([a-zA-Z0-9_.-]*)\.(png|jpg|jpeg)/
 
 const adSize = getParamInQueryString('size')
 
-function updateSetting({content, adPath, loadedImageNames}) {
+function updateSetting({ content, adPath, loadedImageNames }) {
 	const adSizeWH = parseAdSize(adPath)
 
 	set('adPath', adPath)
@@ -22,7 +22,6 @@ function updateSetting({content, adPath, loadedImageNames}) {
 }
 
 function init(content) {
-
 	if (content.emitterDataFiles.length === 0) {
 		const el = document.querySelector('#data-selector')
 		el.classList.add('show-warning', 'show')
@@ -30,28 +29,28 @@ function init(content) {
 		return
 	}
 
-  const adPath = mergePath(getAdPathFromUrl(), adSize)
+	const adPath = mergePath(getAdPathFromUrl(), adSize)
 	const imagePath = '/images'
 
 	// remove gifs from images
 	const imagesToLoad = content.imagePaths.filter(item => {
 		return IMAGE_PATH_PATTERN.test(item)
 	})
-  
-  // Generate paths for loading images
-	imagesToLoad.forEach((item) => {
+
+	// Generate paths for loading images
+	imagesToLoad.forEach(item => {
 		const path = mergePath(imagePath, item)
 		ImageManager.addToLoad(path)
 	})
 
-  // load images using ImageManager
+	// load images using ImageManager
 	ImageManager.load(() => {
-		const names = imagesToLoad.map((item) => {
+		const names = imagesToLoad.map(item => {
 			return IMAGE_PATH_PATTERN.exec(item)[1]
 		})
-    updateSetting({content, adPath, loadedImageNames: names})
-    
-    // create the interface after images are loaded
+		updateSetting({ content, adPath, loadedImageNames: names })
+
+		// create the interface after images are loaded
 		window.Interface = new Interface()
 	})
 }
@@ -67,32 +66,26 @@ function formatEmitterData(str) {
 }
 
 // fetch API
-superagent
-	.get(`/ad-es6-particles/api/?action=getInfo&size=${adSize}`)
-	.end((err, res) => {
-		if (err) {
-			alert('Erro with API. Unable to proceed')
-			return
-		}
+superagent.get(`/ad-es6-particles/api/?action=getInfo&size=${adSize}`).end((err, res) => {
+	if (err) {
+		alert('Erro with API. Unable to proceed')
+		return
+	}
 
-    try {
-      const data = JSON.parse(res.text)
-      const result = JSON.parse(data.stdout)
-  
-      result.emitterDataFiles = result.emitterDataFiles.map((item) => {
-        return {
-          name: item.name,
-          content: formatEmitterData(item.content)
-        }
-      })
-      
-      // initialize the app with the API result
-      init(result)
-    } catch (e) {
-      alert(e)
-    }
-	})
+	try {
+		const data = JSON.parse(res.text)
+		const result = JSON.parse(data.stdout)
 
+		result.emitterDataFiles = result.emitterDataFiles.map(item => {
+			return {
+				name: item.name,
+				content: formatEmitterData(item.content)
+			}
+		})
 
-
-
+		// initialize the app with the API result
+		init(result)
+	} catch (e) {
+		alert(e)
+	}
+})
