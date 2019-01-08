@@ -33,9 +33,12 @@ function init(content) {
 	const imagePath = '/images'
 
 	// remove gifs from images
-	const imagesToLoad = content.imagePaths.filter(item => {
+	var imagesToLoad = content.imagePaths.filter(item => {
 		return IMAGE_PATH_PATTERN.test(item)
 	})
+
+	// ignore image files that start with dot. (imageOptium leaves hidden files undeleted at times)
+	imagesToLoad = imagesToLoad.filter(item => !/(^|\/)\.[^\/\.]/g.test(item))
 
 	// Generate paths for loading images
 	imagesToLoad.forEach(item => {
