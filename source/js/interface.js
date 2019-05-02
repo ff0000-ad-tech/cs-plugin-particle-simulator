@@ -181,7 +181,7 @@ class Interface {
     const data = `export default ${JSON.stringify(this.PS.properties, null, 2)}`;
     const size = `${get("adWidth")}x${get("adHeight")}`;
     superagent
-      .post(`/cs-plugin-particle-simulator/api/`)
+      .post(`/@ff0000-ad-tech/cs-plugin-particle-simulator/api/`)
       .send({
         action: "writeData",
         size,

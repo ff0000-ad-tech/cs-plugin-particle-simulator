@@ -66,7 +66,7 @@ function formatEmitterData(str) {
 }
 
 // fetch API
-superagent.get(`/cs-plugin-particle-simulator/api/?action=getInfo&size=${adSize}`).end((err, res) => {
+superagent.get(`/@ff0000-ad-tech/cs-plugin-particle-simulator/api/?action=getInfo&size=${adSize}`).end((err, res) => {
   if (err) {
     alert("Erro with API. Unable to proceed");
     return;
