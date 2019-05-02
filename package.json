@@ -1,6 +1,6 @@
 {
 	"name": "@ff0000-ad-tech/cs-plugin-particle-simulator",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "Ad Particles simulator",
 	"main": "dist/index.html",
 	"scripts": {
