@@ -1,5 +1,8 @@
 {
 	"name": "@ff0000-ad-tech/cs-plugin-particle-simulator",
+	"publishConfig": {
+		"access": "public"
+	},
 	"version": "1.0.2",
 	"description": "Ad Particles simulator",
 	"main": "dist/index.html",
@@ -17,7 +20,7 @@
 		"url": "https://github.com/ff0000-ad-tech/cs-plugin-particle-simulator.git"
 	},
 	"author": "Nico Hsieh",
-	"license": "ISC",
+	"license": "MIT",
 	"devDependencies": {
 		"@babel/cli": "^7.0.0-beta.40",
 		"@babel/core": "^7.0.0-beta.40",
