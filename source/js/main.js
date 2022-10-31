@@ -77,7 +77,7 @@ superagent
   )
   .end((err, res) => {
     if (err) {
-      alert("Erro with API. Unable to proceed");
+      alert("Error with API. Unable to proceed");
       return;
     }
 
