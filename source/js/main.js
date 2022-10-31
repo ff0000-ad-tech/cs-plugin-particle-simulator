@@ -77,7 +77,7 @@ axios
   )
   .then(function (res) {
     // handle success
-    alert("SUCCESS===", res);
+    alert("SUCCESS===", res.data);
     console.log(res);
   })
   .catch(function (error) {
