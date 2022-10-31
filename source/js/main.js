@@ -28,7 +28,7 @@ function updateSetting({ content, adPath, loadedImageNames }) {
 }
 
 function init(content) {
-  alert("MAIN INIT");
+  console.log("MAIN INIT()");
   if (content.emitterDataFiles.length === 0) {
     const el = document.querySelector("#data-selector");
     el.classList.add("show-warning", "show");
@@ -46,8 +46,8 @@ function init(content) {
   // Generate paths for loading images
   imagesToLoad.forEach((item) => {
     const path = mergePath(imagePath, item);
-    ImageManager.add(path);
-    // JOE ImageManager.addImageRequest(path);
+    // ImageManager.add(path);
+    ImageManager.addImageRequest(path);
   });
 
   // load images using ImageManager
