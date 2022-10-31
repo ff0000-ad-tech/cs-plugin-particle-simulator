@@ -50,13 +50,16 @@ function init(content) {
     ImageManager.addImageRequest(path);
   });
 
+  console.log("SPOT0");
   // load images using ImageManager
   ImageManager.load(() => {
+    console.log("SPOT1");
     const names = imagesToLoad.map((item) => {
       return IMAGE_PATH_PATTERN.exec(item)[1];
     });
+    console.log("SPOT2");
     updateSetting({ content, adPath, loadedImageNames: names });
-
+    console.log("SPOT3");
     // create the interface after images are loaded
     // THIS IS NOT HAPPENING
     window.Interface = new Interface();
@@ -98,33 +101,3 @@ axios
     alert("Error with API. Unable to proceed", error);
     console.log(error);
   });
-
-// fetch API
-// superagent
-//   .get(
-//     `/@ff0000-ad-tech/cs-plugin-particle-simulator/api/?action=getInfo&size=${adSize}`
-//   )
-//   .end((err, res) => {
-//     if (err) {
-//       alert("Error with API. Unable to proceed");
-//       return;
-//     }
-//     alert("RESSS===", res);
-//     try {
-//       const data = JSON.parse(res);
-//       alert("data===", data);
-//       const result = JSON.parse(res.stdout);
-//       alert("result===", result);
-//       result.emitterDataFiles = result.emitterDataFiles.map((item) => {
-//         return {
-//           name: item.name,
-//           content: formatEmitterData(item.content),
-//         };
-//       });
-
-//       // initialize the app with the API result
-//       init(result);
-//     } catch (e) {
-//       alert("SIM ERROR:", e);
-//     }
-//   });
