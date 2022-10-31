@@ -46,7 +46,7 @@ function init(content) {
   // Generate paths for loading images
   imagesToLoad.forEach((item) => {
     const path = mergePath(imagePath, item);
-    ImageManager.addToLoad(path);
+    ImageManager.add(path);
   });
 
   // load images using ImageManager
