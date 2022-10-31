@@ -34,6 +34,7 @@ function init(content) {
 
     return;
   }
+  window.Interface = new Interface();
 
   const adPath = mergePath(getAdPathFromUrl(), adSize);
   const imagePath = "/images";
@@ -57,7 +58,6 @@ function init(content) {
     updateSetting({ content, adPath, loadedImageNames: names });
 
     // create the interface after images are loaded
-    window.Interface = new Interface();
   });
 }
 
