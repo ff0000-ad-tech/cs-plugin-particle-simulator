@@ -27,7 +27,6 @@ function updateSetting({ content, adPath, loadedImageNames }) {
 }
 
 function init(content) {
-  alert("OKM");
   if (content.emitterDataFiles.length === 0) {
     const el = document.querySelector("#data-selector");
     el.classList.add("show-warning", "show");
@@ -96,6 +95,6 @@ superagent
       // initialize the app with the API result
       init(result);
     } catch (e) {
-      alert(e);
+      alert("OKM", e);
     }
   });
