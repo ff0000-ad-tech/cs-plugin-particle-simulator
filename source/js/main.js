@@ -27,7 +27,7 @@ function updateSetting({ content, adPath, loadedImageNames }) {
 }
 
 function init(content) {
-  alert("yap");
+  alert("OKM");
   if (content.emitterDataFiles.length === 0) {
     const el = document.querySelector("#data-selector");
     el.classList.add("show-warning", "show");
