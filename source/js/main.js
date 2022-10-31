@@ -95,6 +95,6 @@ superagent
       // initialize the app with the API result
       init(result);
     } catch (e) {
-      alert("OKM", e);
+      alert("OKMs", e);
     }
   });
