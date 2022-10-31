@@ -82,9 +82,9 @@ superagent
     }
 
     try {
-      const data = JSON.parse(res.text);
+      const data = JSON.parse(res);
       log("data===", data);
-      const result = JSON.parse(data.stdout);
+      const result = JSON.parse(res.stdout);
       log("result===", result);
       result.emitterDataFiles = result.emitterDataFiles.map((item) => {
         return {
