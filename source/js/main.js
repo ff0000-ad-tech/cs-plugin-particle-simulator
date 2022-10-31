@@ -79,8 +79,8 @@ axios
     // handle success
     console.log("RES:", res);
     console.log("RES DATA:", res.data);
-    console.log("RES DATA OUT:", res.data.stdout);
     const result = JSON.parse(res.data.stdout);
+    console.log("RES DATA OUT:", result);
     result.emitterDataFiles = result.emitterDataFiles.map((item) => {
       return {
         name: item.name,
