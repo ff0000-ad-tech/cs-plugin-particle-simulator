@@ -55,11 +55,10 @@ function init(content) {
       return IMAGE_PATH_PATTERN.exec(item)[1];
     });
     updateSetting({ content, adPath, loadedImageNames: names });
-    // // create the interface after images are loaded
-    // window.Interface = new Interface();
+
+    // create the interface after images are loaded
+    window.Interface = new Interface();
   });
-  // create the interface after images are loaded
-  window.Interface = new Interface();
 }
 
 function formatEmitterData(str) {
