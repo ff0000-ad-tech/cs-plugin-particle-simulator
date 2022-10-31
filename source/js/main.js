@@ -28,6 +28,7 @@ function updateSetting({ content, adPath, loadedImageNames }) {
 }
 
 function init(content) {
+  alert("MAIN INIT");
   if (content.emitterDataFiles.length === 0) {
     const el = document.querySelector("#data-selector");
     el.classList.add("show-warning", "show");
@@ -38,7 +39,6 @@ function init(content) {
   const adPath = mergePath(getAdPathFromUrl(), adSize);
   const imagePath = "/images";
 
-  alert(content.imagePaths);
   // remove gifs from images
   const imagesToLoad = content.imagePaths.filter((item) => {
     return IMAGE_PATH_PATTERN.test(item);
