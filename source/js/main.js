@@ -77,8 +77,17 @@ axios
   )
   .then(function (res) {
     // handle success
-    alert("SUCCESS===", res.data);
-    console.log(res);
+    const result = JSON.parse(res.data.stdout);
+
+    result.emitterDataFiles = result.emitterDataFiles.map((item) => {
+      return {
+        name: item.name,
+        content: formatEmitterData(item.content),
+      };
+    });
+
+    // initialize the app with the API result
+    init(result);
   })
   .catch(function (error) {
     // handle error
