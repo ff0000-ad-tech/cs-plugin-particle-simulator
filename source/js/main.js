@@ -10,6 +10,7 @@ import {
 } from "./utils/functions";
 import { set, get } from "./globalSetting";
 import Dom from "./utils/Dom";
+import axios from "axios";
 
 const IMAGE_PATH_PATTERN = /([a-zA-Z0-9_.-]*)\.(png|jpg|jpeg)/;
 
@@ -70,32 +71,47 @@ function formatEmitterData(str) {
   return "";
 }
 
-// fetch API
-superagent
+axios
   .get(
     `/@ff0000-ad-tech/cs-plugin-particle-simulator/api/?action=getInfo&size=${adSize}`
   )
-  .end((err, res) => {
-    if (err) {
-      alert("Error with API. Unable to proceed");
-      return;
-    }
-    alert("RESSS===", res);
-    try {
-      const data = JSON.parse(res);
-      alert("data===", data);
-      const result = JSON.parse(res.stdout);
-      alert("result===", result);
-      result.emitterDataFiles = result.emitterDataFiles.map((item) => {
-        return {
-          name: item.name,
-          content: formatEmitterData(item.content),
-        };
-      });
-
-      // initialize the app with the API result
-      init(result);
-    } catch (e) {
-      alert("SIM ERROR:", e);
-    }
+  .then(function (res) {
+    // handle success
+    alert("SUCCESS===", res);
+    console.log(res);
+  })
+  .catch(function (error) {
+    // handle error
+    alert("Error with API. Unable to proceed", error);
+    console.log(error);
   });
+
+// fetch API
+// superagent
+//   .get(
+//     `/@ff0000-ad-tech/cs-plugin-particle-simulator/api/?action=getInfo&size=${adSize}`
+//   )
+//   .end((err, res) => {
+//     if (err) {
+//       alert("Error with API. Unable to proceed");
+//       return;
+//     }
+//     alert("RESSS===", res);
+//     try {
+//       const data = JSON.parse(res);
+//       alert("data===", data);
+//       const result = JSON.parse(res.stdout);
+//       alert("result===", result);
+//       result.emitterDataFiles = result.emitterDataFiles.map((item) => {
+//         return {
+//           name: item.name,
+//           content: formatEmitterData(item.content),
+//         };
+//       });
+
+//       // initialize the app with the API result
+//       init(result);
+//     } catch (e) {
+//       alert("SIM ERROR:", e);
+//     }
+//   });
