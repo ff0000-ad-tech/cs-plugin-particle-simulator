@@ -83,8 +83,9 @@ superagent
 
     try {
       const data = JSON.parse(res.text);
+      log("data===", data);
       const result = JSON.parse(data.stdout);
-
+      log("result===", result);
       result.emitterDataFiles = result.emitterDataFiles.map((item) => {
         return {
           name: item.name,
@@ -95,6 +96,6 @@ superagent
       // initialize the app with the API result
       init(result);
     } catch (e) {
-      alert(e);
+      alert("SIM ERROR:", e);
     }
   });
