@@ -38,11 +38,11 @@ function init(content) {
   const adPath = mergePath(getAdPathFromUrl(), adSize);
   const imagePath = "/images";
 
+  alert(content.imagePaths);
   // remove gifs from images
   const imagesToLoad = content.imagePaths.filter((item) => {
     return IMAGE_PATH_PATTERN.test(item);
   });
-
   // Generate paths for loading images
   imagesToLoad.forEach((item) => {
     const path = mergePath(imagePath, item);
