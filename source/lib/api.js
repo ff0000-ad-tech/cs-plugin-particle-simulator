@@ -28,6 +28,7 @@ const getInfo = () => {
   const emitterDataPattern = /EmitterData([a-zA-Z0-9_.-]*)\.js$/;
 
   if (!fs.existsSync(emitterDataPath)) {
+    log("EMITTER FILE DOES NOT EXIST");
     const emptyResult = JSON.stringify({
       emitterDataFiles: [],
       imagePaths: [],
