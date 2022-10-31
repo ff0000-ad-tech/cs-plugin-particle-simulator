@@ -15,8 +15,10 @@ const foldersObj = JSON.parse(folders);
 // TODO: use actual path
 const relativeAdPath = `../${foldersObj.build}/${size}/`;
 const adPath = path.resolve(`./${foldersObj.build}`, size);
-const emitterDataPath = path.join(adPath, "js");
-const imagePath = path.join(adPath, "images");
+// const emitterDataPath = path.join(adPath, "js");
+const emitterDataPath = `${argv.context}/${foldersObj.build}/${size}/`;
+const imagePath = `${argv.context}/${foldersObj.build}/${size}/images/`;
+// const imagePath = path.join(adPath, "images");
 
 const getInfo = () => {
   // find emitter data
@@ -26,18 +28,18 @@ const getInfo = () => {
   if (!fs.existsSync(emitterDataPath)) {
     const emptyResult = JSON.stringify({
       emitterDataFiles: [],
-      imagePaths: []
+      imagePaths: [],
     });
     console.log(emptyResult);
   }
   const dataFiles = fs.readdirSync(emitterDataPath);
 
-  dataFiles.forEach(name => {
+  dataFiles.forEach((name) => {
     if (emitterDataPattern.test(name)) {
       const content = fs.readFileSync(path.join(emitterDataPath, name), "utf8");
       emitterDataFiles.push({
         name: name,
-        content: content
+        content: content,
       });
     }
   });
@@ -46,13 +48,13 @@ const getInfo = () => {
   const imagePaths = [];
   const imageFiles = fs.readdirSync(imagePath);
 
-  imageFiles.forEach(name => {
+  imageFiles.forEach((name) => {
     imagePaths.push(`${relativeAdPath}images/${name}`);
   });
 
   const result = {
     emitterDataFiles,
-    imagePaths
+    imagePaths,
   };
 
   console.log(JSON.stringify(result));
@@ -68,7 +70,9 @@ const writeData = () => {
     console.log(`(/◕ヮ◕)/ Weee~ data is saved at ${filePath}`);
   } else {
     console.log(`(@_@) Oops, the file might have been removed: ${filePath}`);
-    console.log("You can still manually copy and paste the data into a new file!");
+    console.log(
+      "You can still manually copy and paste the data into a new file!"
+    );
   }
 };
 
