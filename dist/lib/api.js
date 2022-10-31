@@ -18,8 +18,6 @@ const adPath = path.resolve(`./${foldersObj.build}`, size);
 // const emitterDataPath = path.join(adPath, "js");
 const emitterDataPath = `${argv.context}/${foldersObj.build}/${size}/js`;
 const imagePath = `${argv.context}/${foldersObj.build}/${size}/images`;
-log("emitterPath=", emitterDataPath);
-log("imagePath=", imagePath);
 // const imagePath = path.join(adPath, "images");
 
 const getInfo = () => {
