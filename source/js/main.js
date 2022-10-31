@@ -80,7 +80,7 @@ superagent
       alert("Error with API. Unable to proceed");
       return;
     }
-    alert("RES===", res.text);
+    alert("RESSS===", res.body);
     try {
       const data = JSON.parse(res);
       alert("data===", data);
