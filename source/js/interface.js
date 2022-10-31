@@ -8,6 +8,7 @@ import Dom from "./utils/Dom";
 
 class Interface {
   constructor() {
+    console.log("CREATE INTERFACE");
     this.adWidth = get("adWidth");
     this.adHeight = get("adHeight");
     this.fps = get("fps");
@@ -31,6 +32,7 @@ class Interface {
   }
 
   buildInterface = () => {
+    console.log("BUILD INTERFACE");
     // build the interface
     this.createPS();
 
@@ -71,7 +73,7 @@ class Interface {
     //create, style, add events to additional UI elements
     Dom.setGroupStyle([this.velGuide, this.forceGuide], {
       left: this.adWidth / 2 - 60 + "px",
-      top: this.adHeight / 2 - 60 + "px"
+      top: this.adHeight / 2 - 60 + "px",
     });
 
     this.saveFile.addEventListener("click", this.writeCode, false);
@@ -98,16 +100,18 @@ class Interface {
     this.moveBtn.id = "move-btn";
     this.interfaceContainer.appendChild(this.moveBtn);
 
-    this.moveBtn.addEventListener("mousedown", evt => {
+    this.moveBtn.addEventListener("mousedown", (evt) => {
       this.dragging = true;
       this.draggingStart = new Vector2D(evt.clientX, evt.clientY);
     });
 
-    document.body.addEventListener("mousemove", evt => {
+    document.body.addEventListener("mousemove", (evt) => {
       if (!this.dragging) {
         return;
       }
-      this.draggingOffset = new Vector2D(evt.clientX, evt.clientY).sub(this.draggingStart);
+      this.draggingOffset = new Vector2D(evt.clientX, evt.clientY).sub(
+        this.draggingStart
+      );
       this.interfaceOffset.add(this.draggingOffset);
 
       var top = this.interfaceOffset.y + "px";
@@ -119,7 +123,7 @@ class Interface {
       this.draggingStart = new Vector2D(evt.clientX, evt.clientY);
     });
 
-    document.body.addEventListener("mouseup", evt => {
+    document.body.addEventListener("mouseup", (evt) => {
       this.dragging = false;
     });
   };
@@ -148,7 +152,7 @@ class Interface {
     //particle system instance
     var setting = {
       emitterData: window.selectedEmitterData,
-      fps: this.fps
+      fps: this.fps,
     };
     this.PS = new Emitter();
     this.PS.init(this.canvasEl, setting);
@@ -178,7 +182,11 @@ class Interface {
   };
 
   writeCode = () => {
-    const data = `export default ${JSON.stringify(this.PS.properties, null, 2)}`;
+    const data = `export default ${JSON.stringify(
+      this.PS.properties,
+      null,
+      2
+    )}`;
     const size = `${get("adWidth")}x${get("adHeight")}`;
     superagent
       .post(`/@ff0000-ad-tech/cs-plugin-particle-simulator/api/`)
@@ -186,7 +194,7 @@ class Interface {
         action: "writeData",
         size,
         data,
-        fileName: this.selectedEmitterDataName
+        fileName: this.selectedEmitterDataName,
       })
       .end((err, res) => {
         if (err) {
@@ -216,7 +224,7 @@ class Interface {
     this.dataSelector.classList.add("show");
   };
 
-  selectData = index => {
+  selectData = (index) => {
     // set the emitter data under global scope
     const data = this.emitterDataFiles[index];
     this.selectedEmitterDataName = data.name;
@@ -225,7 +233,7 @@ class Interface {
     this.dataSelector.classList.remove("show");
   };
 
-  evalData = data => {
+  evalData = (data) => {
     try {
       eval(`window.selectedEmitterData=${data}`);
     } catch (e) {
@@ -238,13 +246,13 @@ class Interface {
     var obj = {
       name: name,
       type: "folder",
-      children: this.data.getDefaultNewParticleModelData(name)
+      children: this.data.getDefaultNewParticleModelData(name),
     };
 
     this.activeModels.push(name);
     this.modelIndex++;
 
-    obj.children.forEach(function(item) {
+    obj.children.forEach(function (item) {
       if (typeof item.defaultVal == "object") {
         item.defaultVal = JSON.stringify(item.defaultVal, null, 1);
       }
@@ -255,7 +263,7 @@ class Interface {
     this.updateEmitterModels();
   };
 
-  deleteParticleModel = name => {
+  deleteParticleModel = (name) => {
     //TODO: remove it from dat gui
     var el = document.querySelector("#" + name);
     el.parentNode.removeChild(el);
@@ -275,7 +283,7 @@ class Interface {
 		Generating controls
 	*/
 
-  generateControl = data => {
+  generateControl = (data) => {
     var result = {};
     var i;
     for (i = 0; i < data.length; i++) {
@@ -315,10 +323,10 @@ class Interface {
       var obj = {
         name: name,
         type: "folder",
-        children: this.data.getDefaultNewParticleModelData(name)
+        children: this.data.getDefaultNewParticleModelData(name),
       };
 
-      obj.children.forEach(function(item) {
+      obj.children.forEach(function (item) {
         //use existing value if availabe
         if (m[item.modelKey]) {
           item.defaultVal = m[item.modelKey];
@@ -329,7 +337,7 @@ class Interface {
         }
         //this can be organized better~~
         if (item.name.indexOf("Delete") > -1) {
-          item.defaultVal = (function(n) {
+          item.defaultVal = (function (n) {
             return () => {
               _this.deleteParticleModel(n);
             };
@@ -344,7 +352,7 @@ class Interface {
     return data;
   };
 
-  genertateInterface = function(data, target) {
+  genertateInterface = function (data, target) {
     var gui = new dat.GUI();
     var i;
     for (i = 0; i < data.length; i++) {
@@ -371,7 +379,7 @@ class Interface {
         if (obj.min !== undefined) {
           singleController.min(obj.min);
         }
-        singleController.onFinishChange(val => {
+        singleController.onFinishChange((val) => {
           window.Interface.setEmitterProperty(obj, val, parentObj);
           if (parentObj.name === "world") {
             this.hideGuide(true);
@@ -381,20 +389,25 @@ class Interface {
 
       case "color":
         singleController = targetGui.addColor(control, obj.name);
-        singleController.onChange(val => {
+        singleController.onChange((val) => {
           window.Interface.setEmitterProperty(obj, val, parentObj);
         });
         break;
 
       case "slider":
-        singleController = targetGui.add(control, obj.name, obj.range[0], obj.range[1]);
+        singleController = targetGui.add(
+          control,
+          obj.name,
+          obj.range[0],
+          obj.range[1]
+        );
         if (obj.step !== undefined) {
           singleController.step(obj.step);
         }
-        singleController.onChange(val => {
+        singleController.onChange((val) => {
           window.Interface.setEmitterProperty(obj, val, parentObj);
         });
-        singleController.onFinishChange(val => {
+        singleController.onFinishChange((val) => {
           switch (parentObj.name) {
             case "world":
             case "origin":
@@ -413,7 +426,7 @@ class Interface {
 
       case "dropdown":
         singleController = targetGui.add(control, obj.name, obj.options);
-        singleController.onFinishChange(val => {
+        singleController.onFinishChange((val) => {
           window.Interface.setEmitterProperty(obj, val, parentObj);
           if (parentObj.name === "origin") {
             this.hideGuide(true);
@@ -455,7 +468,13 @@ class Interface {
         var ry = p.originYRange / 2;
         var ox = p.originX - rx;
         var oy = p.originY - ry;
-        this.showGuide(ox, oy, p.originX + rx - ox, p.originY + ry - oy, p.originShape);
+        this.showGuide(
+          ox,
+          oy,
+          p.originX + rx - ox,
+          p.originY + ry - oy,
+          p.originShape
+        );
         break;
 
       case "velocityAngle":
@@ -539,7 +558,7 @@ class Interface {
 		Initial Sync with Emitter
 	*/
 
-  syncWithCurrentData = obj => {
+  syncWithCurrentData = (obj) => {
     var key = obj.map || obj.name;
     var val = null;
 
@@ -584,7 +603,7 @@ class Interface {
       left: x + "px",
       top: y + "px",
       width: w + "px",
-      height: h + "px"
+      height: h + "px",
     };
     Dom.setStyle(this.blockGuide, style);
     Dom.addClass(this.blockGuide, "show");
@@ -619,7 +638,13 @@ class Interface {
 
     ctx.beginPath();
     ctx.moveTo(center.x, center.y);
-    ctx.arc(center.x, center.y, 58, MathUtils.toRadians(startAngle), MathUtils.toRadians(endAngle));
+    ctx.arc(
+      center.x,
+      center.y,
+      58,
+      MathUtils.toRadians(startAngle),
+      MathUtils.toRadians(endAngle)
+    );
     ctx.lineTo(center.x, center.y);
     ctx.strokeStyle = "rgba( 0, 0, 0, .5 )";
     ctx.fillStyle = "rgba( 0, 200, 255, .4 )";
