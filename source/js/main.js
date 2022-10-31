@@ -46,7 +46,7 @@ function init(content) {
   });
   // Generate paths for loading images
   imagesToLoad.forEach((item) => {
-    const path = mergePath(imagePath, item);
+    const path = mergePath(item);
     // ImageManager.add(path);
     ImageManager.addImageRequest(path);
   });
