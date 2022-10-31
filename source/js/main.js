@@ -37,7 +37,7 @@ function init(content) {
   }
 
   const adPath = mergePath(getAdPathFromUrl(), adSize);
-  console.error(content.imagePaths);
+  // console.error(content.imagePaths);
   const imagePath = "/images";
 
   // remove gifs from images
@@ -45,6 +45,7 @@ function init(content) {
     return IMAGE_PATH_PATTERN.test(item);
   });
 
+  console.error(adPath);
   console.error(imagesToLoad);
   // Generate paths for loading images
   imagesToLoad.forEach((item) => {
