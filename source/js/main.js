@@ -77,6 +77,7 @@ axios
   )
   .then(function (res) {
     // handle success
+    console.log("RES:", res);
     console.log("RES DATA:", res.data);
     console.log("RES DATA OUT:", res.data.stdout);
     const result = JSON.parse(res.data.stdout);
