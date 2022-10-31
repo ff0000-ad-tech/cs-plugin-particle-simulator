@@ -49,16 +49,17 @@ function init(content) {
     ImageManager.addImageRequest(path);
   });
 
-  window.Interface = new Interface();
   // load images using ImageManager
   ImageManager.load(() => {
     const names = imagesToLoad.map((item) => {
       return IMAGE_PATH_PATTERN.exec(item)[1];
     });
     updateSetting({ content, adPath, loadedImageNames: names });
-
-    // create the interface after images are loaded
+    // // create the interface after images are loaded
+    // window.Interface = new Interface();
   });
+  // create the interface after images are loaded
+  window.Interface = new Interface();
 }
 
 function formatEmitterData(str) {
