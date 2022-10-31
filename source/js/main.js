@@ -46,7 +46,8 @@ function init(content) {
   // Generate paths for loading images
   imagesToLoad.forEach((item) => {
     const path = mergePath(imagePath, item);
-    ImageManager.addImageRequest(path);
+    ImageManager.add(path);
+    // JOE ImageManager.addImageRequest(path);
   });
 
   // load images using ImageManager
@@ -57,6 +58,7 @@ function init(content) {
     updateSetting({ content, adPath, loadedImageNames: names });
 
     // create the interface after images are loaded
+    // THIS IS NOT HAPPENING
     window.Interface = new Interface();
   });
 }
