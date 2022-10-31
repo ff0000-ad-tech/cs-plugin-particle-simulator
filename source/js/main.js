@@ -34,7 +34,6 @@ function init(content) {
 
     return;
   }
-  window.Interface = new Interface();
 
   const adPath = mergePath(getAdPathFromUrl(), adSize);
   const imagePath = "/images";
@@ -50,6 +49,7 @@ function init(content) {
     ImageManager.addImageRequest(path);
   });
 
+  window.Interface = new Interface();
   // load images using ImageManager
   ImageManager.load(() => {
     const names = imagesToLoad.map((item) => {
