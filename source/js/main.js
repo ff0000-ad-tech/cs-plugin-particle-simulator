@@ -52,7 +52,7 @@ function init(content) {
     const path = "http://192.168.1.82:5201/" + item.substring(3);
     console.error("PATH=", path);
     // const path = mergePath(item);
-    // ImageManager.add(path);
+    ImageManager.add(path);
     // ImageManager.addImageRequest(path);
   });
 
@@ -61,6 +61,7 @@ function init(content) {
   ImageManager.load(() => {
     console.log("SPOT1");
     const names = imagesToLoad.map((item) => {
+      console.log("ITEM", item);
       return IMAGE_PATH_PATTERN.exec(item)[1];
     });
     console.log("SPOT2");
