@@ -49,7 +49,8 @@ function init(content) {
   console.error(imagesToLoad);
   // Generate paths for loading images
   imagesToLoad.forEach((item) => {
-    const path = mergePath(item);
+    const path = "http://192.168.1.82:5201/" + item.substring(3);
+    // const path = mergePath(item);
     // ImageManager.add(path);
     ImageManager.addImageRequest(path);
   });
