@@ -37,7 +37,7 @@ function init(content) {
   }
 
   const adPath = mergePath(getAdPathFromUrl(), adSize);
-  alert(adPath);
+  console.error(content.imagePaths);
   const imagePath = "/images";
 
   // remove gifs from images
