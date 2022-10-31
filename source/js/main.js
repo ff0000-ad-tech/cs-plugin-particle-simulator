@@ -1,6 +1,6 @@
 import "./dat.gui.custom.js";
 import superagent from "superagent";
-import { ImageManager } from "ad-control";
+import { ImageManager } from "@ff0000-ad-tech/ad-assets";
 import Interface from "./Interface";
 import {
   getParamInQueryString,
