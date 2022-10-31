@@ -44,6 +44,8 @@ function init(content) {
   const imagesToLoad = content.imagePaths.filter((item) => {
     return IMAGE_PATH_PATTERN.test(item);
   });
+
+  console.error(imagesToLoad);
   // Generate paths for loading images
   imagesToLoad.forEach((item) => {
     const path = mergePath(item);
