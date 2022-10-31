@@ -2,7 +2,12 @@ import "./dat.gui.custom.js";
 import superagent from "superagent";
 import { ImageManager } from "ad-control";
 import Interface from "./Interface";
-import { getParamInQueryString, getAdPathFromUrl, parseAdSize, mergePath } from "./utils/functions";
+import {
+  getParamInQueryString,
+  getAdPathFromUrl,
+  parseAdSize,
+  mergePath,
+} from "./utils/functions";
 import { set, get } from "./globalSetting";
 import Dom from "./utils/Dom";
 
@@ -22,6 +27,7 @@ function updateSetting({ content, adPath, loadedImageNames }) {
 }
 
 function init(content) {
+  alert("yap");
   if (content.emitterDataFiles.length === 0) {
     const el = document.querySelector("#data-selector");
     el.classList.add("show-warning", "show");
@@ -33,19 +39,19 @@ function init(content) {
   const imagePath = "/images";
 
   // remove gifs from images
-  const imagesToLoad = content.imagePaths.filter(item => {
+  const imagesToLoad = content.imagePaths.filter((item) => {
     return IMAGE_PATH_PATTERN.test(item);
   });
 
   // Generate paths for loading images
-  imagesToLoad.forEach(item => {
+  imagesToLoad.forEach((item) => {
     const path = mergePath(imagePath, item);
     ImageManager.addToLoad(path);
   });
 
   // load images using ImageManager
   ImageManager.load(() => {
-    const names = imagesToLoad.map(item => {
+    const names = imagesToLoad.map((item) => {
       return IMAGE_PATH_PATTERN.exec(item)[1];
     });
     updateSetting({ content, adPath, loadedImageNames: names });
@@ -66,26 +72,30 @@ function formatEmitterData(str) {
 }
 
 // fetch API
-superagent.get(`/@ff0000-ad-tech/cs-plugin-particle-simulator/api/?action=getInfo&size=${adSize}`).end((err, res) => {
-  if (err) {
-    alert("Erro with API. Unable to proceed");
-    return;
-  }
+superagent
+  .get(
+    `/@ff0000-ad-tech/cs-plugin-particle-simulator/api/?action=getInfo&size=${adSize}`
+  )
+  .end((err, res) => {
+    if (err) {
+      alert("Erro with API. Unable to proceed");
+      return;
+    }
 
-  try {
-    const data = JSON.parse(res.text);
-    const result = JSON.parse(data.stdout);
+    try {
+      const data = JSON.parse(res.text);
+      const result = JSON.parse(data.stdout);
 
-    result.emitterDataFiles = result.emitterDataFiles.map(item => {
-      return {
-        name: item.name,
-        content: formatEmitterData(item.content)
-      };
-    });
+      result.emitterDataFiles = result.emitterDataFiles.map((item) => {
+        return {
+          name: item.name,
+          content: formatEmitterData(item.content),
+        };
+      });
 
-    // initialize the app with the API result
-    init(result);
-  } catch (e) {
-    alert(e);
-  }
-});
+      // initialize the app with the API result
+      init(result);
+    } catch (e) {
+      alert(e);
+    }
+  });
