@@ -14,12 +14,11 @@ const foldersObj = JSON.parse(folders);
 
 // TODO: use actual path
 const relativeAdPath = `../../../../${foldersObj.build}/${size}/`;
-// const relativeAdPath = `../${foldersObj.build}/${size}/`;
 const adPath = path.resolve(`./${foldersObj.build}`, size);
-// const emitterDataPath = path.join(adPath, "js");
 const emitterDataPath = `${argv.context}/${foldersObj.build}/${size}/js`;
+// Original const emitterDataPath = path.join(adPath, "js");
 const imagePath = `${argv.context}/${foldersObj.build}/${size}/images`;
-// const imagePath = path.join(adPath, "images");
+// Original const imagePath = path.join(adPath, "images");
 
 const getInfo = () => {
   // find emitter data
@@ -51,9 +50,7 @@ const getInfo = () => {
   const imageFiles = fs.readdirSync(imagePath);
 
   imageFiles.forEach((name) => {
-    // imagePaths.push(`http://192.168.1.82:5200/1-build/300x250/images/${name}`);
     imagePaths.push(`${relativeAdPath}images/${name}`);
-    // imagePaths.push(`${relativeAdPath}images/${name}`);
   });
 
   const result = {
