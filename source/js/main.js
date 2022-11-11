@@ -58,7 +58,6 @@ function init(content) {
   });
 
   console.log("SPOT0");
-  window.Interface = new Interface();
   // load images using ImageManager
   ImageManager.load(() => {
     console.log("SPOT1");
@@ -69,6 +68,7 @@ function init(content) {
     console.log("SPOT2");
     updateSetting({ content, adPath, loadedImageNames: names });
     console.log("SPOT3");
+    window.Interface = new Interface();
     // create the interface after images are loaded
     // THIS IS NOT HAPPENING
   });
