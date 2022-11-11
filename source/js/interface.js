@@ -17,7 +17,7 @@ class Interface {
     this.images = get("loadedImageNames");
 
     this.data = getInterfaceData(this);
-
+    console.error("this.emitterDataFile", this.emitterDataFile);
     if (this.emitterDataFiles.length > 1) {
       // when more than 1 emitter data file found, show the selector
       this.dataSelector = document.querySelector("#data-selector");
