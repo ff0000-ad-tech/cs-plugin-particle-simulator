@@ -50,7 +50,7 @@ const getInfo = () => {
   const imageFiles = fs.readdirSync(imagePath);
 
   imageFiles.forEach((name) => {
-    imagePaths.push(`http://192.168.1.82:5201/1-build/300x250/images/${name}`);
+    imagePaths.push(`http://192.168.1.82:5200/1-build/300x250/images/${name}`);
     // imagePaths.push(`${relativeAdPath}images/${name}`);
   });
 
