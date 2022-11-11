@@ -17,6 +17,7 @@ const IMAGE_PATH_PATTERN = /([a-zA-Z0-9_.-]*)\.(png|jpg|jpeg)/;
 const adSize = getParamInQueryString("size");
 
 function updateSetting({ content, adPath, loadedImageNames }) {
+  console.error("UPDATE SETTING", content, adPath, loadedImageNames);
   const adSizeWH = parseAdSize(adPath);
 
   set("adPath", adPath);
