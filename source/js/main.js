@@ -60,16 +60,16 @@ function init(content) {
   // load images using ImageManager
   ImageManager.load(() => {
     console.log("SPOT1");
-    const names = imagesToLoad.map((item) => {
-      console.log("ITEM", item);
-      return IMAGE_PATH_PATTERN.exec(item)[1];
-    });
-    console.log("SPOT2");
-    updateSetting({ content, adPath, loadedImageNames: names });
-    console.log("SPOT3");
-    // create the interface after images are loaded
-    // THIS IS NOT HAPPENING
-    window.Interface = new Interface();
+    // const names = imagesToLoad.map((item) => {
+    //   console.log("ITEM", item);
+    //   return IMAGE_PATH_PATTERN.exec(item)[1];
+    // });
+    // console.log("SPOT2");
+    // updateSetting({ content, adPath, loadedImageNames: names });
+    // console.log("SPOT3");
+    // // create the interface after images are loaded
+    // // THIS IS NOT HAPPENING
+    // window.Interface = new Interface();
   });
 }
 
