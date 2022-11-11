@@ -27,8 +27,7 @@ function updateSetting({ content, adPath, loadedImageNames }) {
   set("emitterDataFiles", content.emitterDataFiles);
 }
 
-function init(content) {
-  console.log("MAIN INIT()");
+async function init(content) {
   if (content.emitterDataFiles.length === 0) {
     const el = document.querySelector("#data-selector");
     el.classList.add("show-warning", "show");
@@ -36,41 +35,34 @@ function init(content) {
     return;
   }
 
-  const adPath = mergePath(getAdPathFromUrl(), adSize);
+  const adPath = "http://192.168.1.82:5201/1-build/" + adSize; //mergePath(getAdPathFromUrl(), adSize);
   // console.error(content.imagePaths);
   const imagePath = "/images";
 
   // remove gifs from images
   const imagesToLoad = content.imagePaths.filter((item) => {
-    return IMAGE_PATH_PATTERN.test(item);
+    const yap = IMAGE_PATH_PATTERN.test(item);
+    return yap;
   });
 
-  console.error(adPath);
-  console.error(imagesToLoad);
   // Generate paths for loading images
   imagesToLoad.forEach((item) => {
     const path = "http://192.168.1.82:5201/" + item.substring(3);
-    console.error("PATH=", path);
     // const path = mergePath(item);
     // ImageManager.add(path); // ERRORS
-    ImageManager.addImageRequest(path);
+    const imgId = ImageManager.addImageRequest({ src: item });
   });
 
-  console.log("SPOT00");
   // load images using ImageManager
-  ImageManager.load(() => {
-    console.log("SPOT1");
-    //   const names = imagesToLoad.map((item) => {
-    //     console.log("ITEM", item);
-    //     return IMAGE_PATH_PATTERN.exec(item)[1];
-    //   });
-    //   console.log("SPOT2");
-    //   updateSetting({ content, adPath, loadedImageNames: names });
-    //   console.log("SPOT3");
-    //   // create the interface after images are loaded
-    //   // THIS IS NOT HAPPENING
-    //   window.Interface = new Interface();
+  const loaded = await ImageManager.load();
+  const names = imagesToLoad.map((item) => {
+    const pp = IMAGE_PATH_PATTERN.exec(item)[1];
+    return pp;
   });
+  updateSetting({ content, adPath, loadedImageNames: names });
+  if (loaded) {
+    window.Interface = new Interface();
+  }
 }
 
 function formatEmitterData(str) {
@@ -89,8 +81,6 @@ axios
   )
   .then(function (res) {
     // handle success
-    console.log("RES:", res);
-    console.log("RES DATA:", res.data);
     const result = JSON.parse(res.data.stdout);
     console.log("RES DATA OUT:", result);
     result.emitterDataFiles = result.emitterDataFiles.map((item) => {

@@ -1,5 +1,5 @@
 import superagent from "superagent";
-import { Emitter } from "ad-particles";
+import { Emitter } from "@ff0000-ad-tech/ad-particles";
 import { Vector2D } from "ad-geom";
 import { MathUtils } from "ad-utils";
 import { get } from "./globalSetting";
@@ -15,7 +15,7 @@ class Interface {
     this.emitterDataFiles = get("emitterDataFiles");
 
     this.images = get("loadedImageNames");
-
+    console.error(this.images);
     this.data = getInterfaceData(this);
 
     if (this.emitterDataFiles.length > 1) {
