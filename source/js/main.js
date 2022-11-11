@@ -52,25 +52,25 @@ function init(content) {
     const path = "http://192.168.1.82:5201/" + item.substring(3);
     console.error("PATH=", path);
     // const path = mergePath(item);
-    // ImageManager.add(path);
+    // ImageManager.add(path); // ERRORS
     ImageManager.addImageRequest(path);
   });
 
   console.log("SPOT0");
   // load images using ImageManager
-  // ImageManager.load(() => {
-  //   console.log("SPOT1");
-  //   const names = imagesToLoad.map((item) => {
-  //     console.log("ITEM", item);
-  //     return IMAGE_PATH_PATTERN.exec(item)[1];
-  //   });
-  //   console.log("SPOT2");
-  //   updateSetting({ content, adPath, loadedImageNames: names });
-  //   // create the interface after images are loaded
-  //   // THIS IS NOT HAPPENING
-  //   window.Interface = new Interface();
-  // });
-  console.log("SPOT3");
+  ImageManager.load(() => {
+    console.log("SPOT1");
+    const names = imagesToLoad.map((item) => {
+      console.log("ITEM", item);
+      return IMAGE_PATH_PATTERN.exec(item)[1];
+    });
+    console.log("SPOT2");
+    updateSetting({ content, adPath, loadedImageNames: names });
+    console.log("SPOT3");
+    // create the interface after images are loaded
+    // THIS IS NOT HAPPENING
+    window.Interface = new Interface();
+  });
 }
 
 function formatEmitterData(str) {
