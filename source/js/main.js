@@ -1,5 +1,4 @@
 import "./dat.gui.custom.js";
-import superagent from "superagent";
 import { ImageManager } from "@ff0000-ad-tech/ad-assets";
 import Interface from "./Interface";
 import {
@@ -35,7 +34,8 @@ async function init(content) {
     return;
   }
 
-  const adPath = "http://192.168.1.82:5200/1-build/" + adSize; //mergePath(getAdPathFromUrl(), adSize);
+  const adPath = mergePath(getAdPathFromUrl(), adSize);
+  // const adPath = "http://192.168.1.82:5200/1-build/" + adSize; //mergePath(getAdPathFromUrl(), adSize);
   // console.error(content.imagePaths);
   const imagePath = "/images";
 
@@ -47,8 +47,8 @@ async function init(content) {
 
   // Generate paths for loading images
   imagesToLoad.forEach((item) => {
-    const path = "http://192.168.1.82:5200/" + item.substring(3);
-    // const path = mergePath(item);
+    // const path = "http://192.168.1.82:5200/" + item.substring(3);
+    const path = mergePath(item);
     // ImageManager.add(path); // ERRORS
     const imgId = ImageManager.addImageRequest({ src: item });
   });
